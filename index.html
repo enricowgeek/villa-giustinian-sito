@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#21392E" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Villa Giustinian" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<title>Park Hotel Villa Giustinian — Mirano, Venezia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#22271F;--park:#21392E;--park-deep:#16261E;
+    --paper:#F4EFE6;--paper-2:#ECE4D5;
+    --brass:#A87C3D;--brass-lite:#CBA868;--pool:#5E8C84;
+    --line:rgba(34,39,31,.14);--line-light:rgba(244,239,230,.22);
+    --display:"Cormorant Garamond",Georgia,serif;
+    --sans:"Hanken Grotesk",system-ui,sans-serif;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  section[id]{scroll-margin-top:84px}
+
+  .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--brass);display:inline-flex;align-items:center;gap:.7em}
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--brass);opacity:.7}
+  .eyebrow.center{justify-content:center}
+  h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.05;letter-spacing:.005em}
+  .display{font-size:clamp(2.6rem,6vw,4.6rem)}
+  h2{font-size:clamp(2rem,4.2vw,3.3rem)}
+  .lead{font-family:var(--display);font-size:clamp(1.25rem,2.1vw,1.6rem);font-style:italic;color:var(--park);line-height:1.45}
+
+  .ribbon{background:var(--park-deep);color:var(--paper);font-size:.78rem;letter-spacing:.06em;text-align:center;padding:9px 16px}
+  .ribbon b{color:var(--brass-lite);font-weight:600}
+  .ribbon span{opacity:.55;margin:0 .7em}
+
+  header{position:sticky;top:0;z-index:60;background:transparent;transition:background .4s,box-shadow .4s,padding .4s;padding:22px 0}
+  header.solid{background:rgba(244,239,230,.96);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--line);padding:14px 0}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .brand{display:flex;flex-direction:column;line-height:1;color:var(--paper);transition:color .4s}
+  header.solid .brand{color:var(--ink)}
+  .brand .name{font-family:var(--display);font-size:1.5rem;font-weight:600;letter-spacing:.02em}
+  .brand .sub{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;opacity:.8;margin-top:4px}
+  .nav-links{display:flex;align-items:center;gap:30px}
+  .nav-links a{font-size:.82rem;font-weight:500;letter-spacing:.04em;color:var(--paper);transition:color .4s;position:relative}
+  header.solid .nav-links a{color:var(--ink)}
+  .nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--brass);transition:width .3s}
+  .nav-links a:not(.btn):hover::after{width:100%}
+  .lang{font-size:.74rem;letter-spacing:.12em;opacity:.85}
+  .lang b{color:var(--brass-lite)}
+  header.solid .lang b{color:var(--brass)}
+  .btn{display:inline-block;background:var(--brass);color:#fff;padding:11px 22px;border-radius:2px;font-weight:600;font-size:.8rem;letter-spacing:.06em;border:1px solid var(--brass);transition:background .25s,color .25s,transform .25s;cursor:pointer}
+  .btn:hover{background:transparent;color:var(--brass);transform:translateY(-1px)}
+  header:not(.solid) .btn:hover{color:var(--paper);border-color:var(--paper)}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:0;padding:6px}
+  .burger span{width:26px;height:2px;background:var(--paper);transition:.3s}
+  header.solid .burger span{background:var(--ink)}
+
+  /* hero */
+  .hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:flex-end;margin-top:-92px;padding-top:92px;background:var(--park-deep);overflow:hidden}
+  .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);will-change:transform;opacity:0;transition:opacity 1.2s ease}
+  .hero-img.show{opacity:1}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,38,30,.5) 0%,rgba(22,38,30,.12) 35%,rgba(22,38,30,.8) 100%)}
+  .hero-inner{position:relative;z-index:2;width:100%;padding-bottom:170px;will-change:transform,opacity}
+  .hero h1{color:var(--paper);max-width:14ch;margin:.35em 0 .4em}
+  .hero .eyebrow{color:var(--brass-lite)}
+  .hero .eyebrow::before{background:var(--brass-lite)}
+  .hero p{color:rgba(244,239,230,.86);max-width:46ch;font-size:1.05rem}
+  .scroll-cue{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:3;color:rgba(244,239,230,.7);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .scroll-cue .line{width:1px;height:38px;background:rgba(244,239,230,.5);position:relative;overflow:hidden}
+  .scroll-cue .line::after{content:"";position:absolute;top:-38px;left:0;width:1px;height:38px;background:var(--brass-lite);animation:cue 2.2s ease-in-out infinite}
+  @keyframes cue{0%{top:-38px}60%,100%{top:38px}}
+
+  /* booking */
+  .booking{position:relative;z-index:30;margin:-86px auto 0;max-width:var(--maxw);padding:0 28px}
+  .booking-card{background:var(--paper);border:1px solid var(--line);box-shadow:0 24px 60px -32px rgba(22,38,30,.5);display:grid;grid-template-columns:1.1fr 1.1fr 1fr auto}
+  .field{padding:18px 24px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:5px}
+  .field label{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);font-weight:600}
+  .field input,.field select{border:0;background:transparent;font-family:var(--display);font-size:1.35rem;color:var(--ink);width:100%;outline:none;cursor:pointer}
+  .field input::-webkit-calendar-picker-indicator{opacity:.4}
+  .booking .btn{border-radius:0;display:flex;align-items:center;justify-content:center;padding:0 34px;font-size:.85rem}
+  .booking-note{text-align:center;font-size:.74rem;color:var(--park);opacity:.75;margin-top:14px;letter-spacing:.03em;transition:opacity .3s}
+  .booking-note b{color:var(--brass);font-weight:600}
+
+  /* sticky compact booking bar */
+  .mini-book{position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(244,239,230,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);box-shadow:0 -12px 40px -24px rgba(22,38,30,.55);transform:translateY(115%);transition:transform .45s cubic-bezier(.4,0,.2,1);padding:12px 0;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+  .mini-book.show{transform:translateY(0)}
+  .mini-inner{max-width:var(--maxw);margin:0 auto;padding:0 28px;display:flex;align-items:center;gap:18px;justify-content:space-between}
+  .mini-prop{font-size:.82rem;color:var(--park);font-weight:500;letter-spacing:.01em;white-space:nowrap}
+  .mini-prop b{font-family:var(--display);font-size:1.1rem;color:var(--ink);font-weight:600}
+  .mini-prop .long{color:var(--brass);font-weight:600}
+  .mini-fields{display:flex;align-items:center;border:1px solid var(--line);background:var(--paper)}
+  .mini-fields .mf{display:flex;flex-direction:column;gap:1px;padding:6px 16px;border-right:1px solid var(--line)}
+  .mini-fields .mf label{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);font-weight:600}
+  .mini-fields .mf input,.mini-fields .mf select{border:0;background:transparent;font-family:var(--display);font-size:1.05rem;color:var(--ink);outline:none;cursor:pointer;max-width:148px}
+  .mini-book .btn{border-radius:2px;white-space:nowrap}
+  @media(max-width:820px){
+    .mini-fields,.mini-prop .long{display:none}
+    .mini-inner{gap:14px}
+    .mini-prop{white-space:normal;line-height:1.15;font-size:.74rem}
+    .mini-prop b{font-size:1rem;display:block}
+    .mini-book .btn{flex:1;text-align:center;padding:14px 18px}
+  }
+
+  section.block{padding:clamp(70px,9vw,128px) 0}
+  .center{text-align:center}
+  .mt-s{margin-top:14px}.mt-m{margin-top:26px}
+
+  /* story */
+  .story{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,90px);align-items:center}
+  .story-figure{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--park),var(--park-deep));aspect-ratio:4/5}
+  .story-figure img{width:100%;height:100%;object-fit:cover;will-change:transform}
+  .story-figure .tag{position:absolute;left:0;bottom:26px;z-index:2;background:var(--brass);color:#fff;padding:10px 20px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+  .story h2{margin:.3em 0}
+  .story p+p{margin-top:1.1em}
+  .rule{width:48px;height:1px;background:var(--brass);margin:26px 0}
+
+  /* pillars */
+  .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .pillar{background:var(--paper);padding:38px 28px;transition:background .3s}
+  .pillar:hover{background:var(--paper-2)}
+  .pillar .num{font-family:var(--display);font-size:1rem;color:var(--brass);letter-spacing:.1em}
+  .pillar h3{font-size:1.5rem;margin:14px 0 8px}
+  .pillar p{font-size:.92rem;color:rgba(34,39,31,.74)}
+
+  /* rooms */
+  .rooms-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px}
+  .rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:48px}
+  .room{background:var(--paper);border:1px solid var(--line);transition:transform .35s,box-shadow .35s}
+  .room:hover{transform:translateY(-6px);box-shadow:0 30px 50px -34px rgba(22,38,30,.45)}
+  .room-img{aspect-ratio:3/2;background:linear-gradient(135deg,var(--pool),var(--park));overflow:hidden}
+  .room-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+  .room:hover .room-img img{transform:scale(1.05)}
+  .room-body{padding:24px 24px 28px}
+  .room-body h3{font-size:1.55rem}
+  .room-meta{display:flex;gap:16px;font-size:.78rem;color:var(--brass);letter-spacing:.05em;margin:8px 0 14px;text-transform:uppercase;font-weight:600}
+  .room-body p{font-size:.9rem;color:rgba(34,39,31,.72)}
+  .room-link{margin-top:18px;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);display:inline-flex;gap:8px;align-items:center}
+  .room-link::after{content:"→";color:var(--brass);transition:transform .3s}
+  .room:hover .room-link::after{transform:translateX(5px)}
+
+  /* pinned pool feature */
+  .feature{position:relative;height:175vh;background:var(--park-deep)}
+  .feature-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;color:var(--paper)}
+  .feature-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.4;transform:scale(1.05);will-change:transform}
+  .feature-sticky::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--park-deep) 6%,rgba(22,38,30,.35) 100%)}
+  .feature-content{position:relative;z-index:2;width:100%;will-change:transform}
+  .feature .eyebrow{color:var(--brass-lite)}
+  .feature .eyebrow::before{background:var(--brass-lite)}
+  .feature h2{color:var(--paper);max-width:16ch;margin:.3em 0}
+  .feature p{max-width:44ch;color:rgba(244,239,230,.82)}
+  .feature-info{display:flex;gap:48px;margin-top:40px;flex-wrap:wrap}
+  .feature-info .k{font-family:var(--display);font-size:2rem;color:var(--brass-lite);display:block}
+  .feature-info .l{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-top:4px;display:block}
+
+  /* dintorni */
+  .around{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:48px}
+  .place{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--park);color:#fff;display:flex;align-items:flex-end}
+  .place img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s}
+  .place:hover img{transform:scale(1.06)}
+  .place::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(22,38,30,.85))}
+  .place-body{position:relative;z-index:2;padding:26px}
+  .place-body .min{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-lite);font-weight:600}
+  .place-body h3{font-size:1.7rem;margin-top:6px}
+
+  /* weddings */
+  .wed{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
+  .wed-text{background:var(--paper-2);display:flex;align-items:center;padding:clamp(40px,6vw,90px)}
+  .wed-img{background:linear-gradient(135deg,var(--park),var(--park-deep));position:relative;overflow:hidden}
+  .wed-img img{width:100%;height:100%;object-fit:cover;will-change:transform}
+
+  /* direct band */
+  .direct{background:var(--brass);color:#fff;text-align:center;padding:clamp(56px,7vw,90px) 28px}
+  .direct h2{color:#fff;max-width:20ch;margin:.2em auto .4em}
+  .direct p{max-width:48ch;margin:0 auto;color:rgba(255,255,255,.9)}
+  .direct .btn{background:#fff;color:var(--brass);border-color:#fff;margin-top:30px}
+  .direct .btn:hover{background:transparent;color:#fff}
+
+  /* footer */
+  footer{background:var(--park-deep);color:rgba(244,239,230,.75);padding-top:80px}
+  .foot-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px;padding-bottom:56px;border-bottom:1px solid var(--line-light)}
+  footer .name{font-family:var(--display);font-size:1.7rem;color:var(--paper);font-weight:600}
+  footer h4{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-lite);font-weight:600;margin-bottom:18px}
+  footer ul{list-style:none}
+  footer li{margin-bottom:10px;font-size:.9rem}
+  footer a:hover{color:var(--paper)}
+  .foot-contact p{font-size:.9rem;margin-bottom:8px}
+  .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:26px 0;font-size:.78rem;opacity:.6}
+  .socials{display:flex;gap:18px}
+
+  /* PWA install pill */
+  .install-pill{position:fixed;left:24px;bottom:24px;z-index:76;display:none;align-items:center;gap:8px;background:var(--park);color:var(--paper);border:0;padding:12px 18px;border-radius:30px;font-family:var(--sans);font-size:.82rem;font-weight:600;cursor:pointer;box-shadow:0 14px 34px -14px rgba(22,38,30,.6);transition:bottom .4s cubic-bezier(.4,0,.2,1),transform .2s}
+  .install-pill.show{display:inline-flex}
+  .install-pill:hover{transform:translateY(-2px)}
+  body.mini-on .install-pill{bottom:96px}
+  @media(max-width:480px){.install-pill{left:12px;bottom:80px}body.mini-on .install-pill{bottom:150px}}
+
+  /* concierge chat */
+  .chat-fab{position:fixed;right:24px;bottom:24px;z-index:77;width:60px;height:60px;border-radius:50%;border:0;cursor:pointer;background:var(--park);color:var(--brass-lite);box-shadow:0 14px 34px -12px rgba(22,38,30,.6);display:flex;align-items:center;justify-content:center;transition:bottom .4s cubic-bezier(.4,0,.2,1),transform .25s}
+  .chat-fab:hover{transform:translateY(-2px)}
+  .chat-fab svg{width:26px;height:26px}
+  .chat-fab .badge{position:absolute;top:0;right:0;width:14px;height:14px;border-radius:50%;background:var(--brass);border:2px solid var(--paper)}
+  body.mini-on .chat-fab{bottom:96px}
+  .chat-teaser{position:fixed;right:96px;bottom:36px;z-index:76;background:var(--paper);color:var(--ink);border:1px solid var(--line);box-shadow:0 12px 30px -16px rgba(22,38,30,.5);padding:10px 16px;border-radius:30px;font-size:.84rem;font-weight:500;opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity .4s,transform .4s,bottom .4s}
+  .chat-teaser.show{opacity:1;transform:none}
+  body.mini-on .chat-teaser{bottom:108px}
+  .chat-panel{position:fixed;right:24px;bottom:100px;z-index:77;width:370px;max-width:calc(100vw - 32px);max-height:min(72vh,calc(100vh - 180px));background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 70px -28px rgba(22,38,30,.6);opacity:0;transform:translateY(16px) scale(.98);pointer-events:none;transition:opacity .35s,transform .35s,bottom .4s}
+  .chat-panel.open{opacity:1;transform:none;pointer-events:auto}
+  body.mini-on .chat-panel{bottom:172px}
+  .chat-head{display:flex;align-items:center;gap:12px;padding:15px 18px;background:var(--park);color:var(--paper)}
+  .chat-ava{width:38px;height:38px;border-radius:50%;background:rgba(203,168,104,.18);display:flex;align-items:center;justify-content:center;font-size:1.1rem;border:1px solid rgba(203,168,104,.5)}
+  .chat-head-txt{flex:1;line-height:1.2}
+  .chat-head-txt strong{font-family:var(--display);font-size:1.12rem;font-weight:600;display:block}
+  .chat-head-txt span{font-size:.7rem;opacity:.85;display:flex;align-items:center;gap:6px}
+  .chat-head-txt .dot{width:7px;height:7px;border-radius:50%;background:#6fbf73}
+  .chat-x{background:none;border:0;color:var(--paper);font-size:1.6rem;cursor:pointer;opacity:.8;line-height:1;padding:0 4px}
+  .chat-x:hover{opacity:1}
+  .chat-body{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;background:var(--paper-2)}
+  .msg{max-width:85%;padding:11px 14px;border-radius:14px;font-size:.9rem;line-height:1.45;white-space:pre-line;animation:pop .3s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .msg.bot{background:var(--paper);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.user{background:var(--brass);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;align-self:flex-start;max-width:100%}
+  .chip{background:transparent;border:1px solid var(--brass);color:var(--park);font-family:var(--sans);font-size:.8rem;font-weight:600;padding:8px 14px;border-radius:30px;cursor:pointer;transition:background .2s,color .2s}
+  .chip:hover{background:var(--brass);color:#fff}
+  .typing{align-self:flex-start;background:var(--paper);border:1px solid var(--line);padding:12px 14px;border-radius:14px;border-bottom-left-radius:4px;display:flex;gap:4px}
+  .typing i{width:7px;height:7px;border-radius:50%;background:var(--brass);animation:blink 1.2s infinite}
+  .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+  @keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+  .chat-input{display:flex;align-items:center;gap:8px;padding:12px;border-top:1px solid var(--line);background:var(--paper)}
+  .chat-input input{flex:1;border:1px solid var(--line);background:var(--paper-2);border-radius:24px;padding:11px 16px;font-family:var(--sans);font-size:.88rem;color:var(--ink);outline:none}
+  .chat-input input:focus{border-color:var(--brass)}
+  .chat-input button{background:var(--park);color:var(--brass-lite);border:0;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1rem;flex-shrink:0;transition:transform .2s}
+  .chat-input button:hover{transform:scale(1.06)}
+  @media(max-width:480px){
+    .chat-panel{right:12px;left:12px;width:auto;bottom:88px;max-height:min(76vh,calc(100vh - 150px))}
+    body.mini-on .chat-panel{bottom:150px}
+    .chat-teaser{display:none}
+  }
+
+  /* geo — 15 minuti da Venezia */
+  .geo{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(36px,5vw,72px);align-items:center;margin-top:50px}
+  .geo-map svg{width:100%;height:auto;display:block;overflow:visible}
+  .geo-lists{display:grid;gap:34px}
+  .geo-block h3{font-size:1.5rem;margin-bottom:6px}
+  .geo-block .sub{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:.6em}
+  .geo-block .sub::before{content:"";width:22px;height:1px;background:var(--brass);opacity:.7}
+  .times{list-style:none}
+  .times li{display:flex;justify-content:space-between;align-items:baseline;gap:18px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .times li:last-child{border-bottom:0}
+  .times .dest{font-family:var(--display);font-size:1.18rem;color:var(--ink);line-height:1.1}
+  .times .mode{display:block;font-family:var(--sans);font-size:.78rem;color:rgba(34,39,31,.6);margin-top:3px;letter-spacing:.01em}
+  .times .dur{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--brass);font-weight:700;white-space:nowrap}
+  .geo-note{margin-top:8px;font-size:.84rem;color:var(--park);opacity:.85}
+  .geo-note b{color:var(--brass);font-weight:600}
+
+  /* eventi — agenda */
+  .agenda{margin-top:48px;border-top:1px solid var(--line)}
+  .agenda-row{display:grid;grid-template-columns:190px 1fr auto;gap:28px;align-items:center;padding:26px 6px;border-bottom:1px solid var(--line);transition:background .3s}
+  .agenda-row:hover{background:var(--paper-2)}
+  .agenda-when{font-family:var(--display);font-size:1.18rem;color:var(--brass);font-weight:600;letter-spacing:.02em;line-height:1.1}
+  .agenda-when small{display:block;font-family:var(--sans);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(34,39,31,.5);font-weight:600;margin-top:5px}
+  .agenda-main h3{font-size:1.5rem;line-height:1.1}
+  .agenda-main p{font-size:.92rem;color:rgba(34,39,31,.72);margin-top:7px;max-width:62ch}
+  .agenda-cta{font-size:.76rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+  .agenda-cta::after{content:"→";color:var(--brass);transition:transform .3s}
+  .agenda-row:hover .agenda-cta::after{transform:translateX(5px)}
+  .agenda-row.feat{background:var(--park-deep);border-bottom-color:var(--park-deep)}
+  .agenda-row.feat:hover{background:var(--park)}
+  .agenda-row.feat .agenda-when{color:var(--brass-lite)}
+  .agenda-row.feat .agenda-when small{color:rgba(244,239,230,.55)}
+  .agenda-row.feat h3{color:var(--paper)}
+  .agenda-row.feat p{color:rgba(244,239,230,.8)}
+  .agenda-row.feat .agenda-cta{color:var(--paper)}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    .nav-links{position:fixed;inset:0 0 0 auto;width:78%;max-width:340px;background:var(--park-deep);flex-direction:column;align-items:flex-start;justify-content:center;gap:28px;padding:40px;transform:translateX(100%);transition:transform .4s;z-index:80}
+    .nav-links.open{transform:none}
+    .nav-links a{color:var(--paper)!important;font-size:1.1rem}
+    .burger{display:flex;z-index:90}
+    .pillars{grid-template-columns:repeat(2,1fr)}
+    .rooms,.around{grid-template-columns:1fr}
+    .story,.wed{grid-template-columns:1fr}
+    .wed{min-height:0}.wed-img{aspect-ratio:4/3;order:-1}
+    .booking-card{grid-template-columns:1fr 1fr}
+    .field:nth-child(3){border-right:0}
+    .booking .btn{grid-column:1/-1;padding:18px}
+    .hero-inner{padding-bottom:150px}
+    .feature{height:auto}
+    .feature-sticky{position:static;height:auto;min-height:70vh;padding:80px 0}
+    .geo{grid-template-columns:1fr;gap:40px}
+    .geo-map{max-width:440px;margin:0 auto}
+    .agenda-row{grid-template-columns:1fr;gap:10px;padding:22px 4px}
+    .agenda-when{font-size:1rem;display:flex;align-items:baseline;gap:12px}
+    .agenda-when small{margin-top:0}
+  }
+  @media(max-width:560px){
+    .booking-card{grid-template-columns:1fr}
+    .field{border-right:0;border-bottom:1px solid var(--line)}
+    .ribbon span{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important}
+    .reveal{opacity:1;transform:none;transition:none}
+    .hero-img{opacity:1}
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <b>Piscina gratuita</b> prenotando dal sito ufficiale <span>•</span> <b>Miglior tariffa garantita</b> <span>•</span> 15 minuti da Venezia
+</div>
+
+<header id="header">
+  <div class="wrap nav">
+    <a href="#" class="brand"><span class="name">Villa Giustinian</span><span class="sub">Park Hotel · Mirano</span></a>
+    <nav class="nav-links" id="menu">
+      <a href="#storia">La Villa</a>
+      <a href="#camere">Camere</a>
+      <a href="#piscina">Piscina &amp; Parco</a>
+      <a href="#dintorni">Dintorni</a>
+      <a href="#eventi">Eventi</a>
+      <span class="lang"><b>IT</b> · EN · DE</span>
+      <a href="#prenota" class="btn">Prenota</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <img class="hero-img" id="heroImg" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-10.jpeg" alt="Park Hotel Villa Giustinian immerso nel parco" onerror="this.style.display='none'">
+  <div class="wrap hero-inner" id="heroInner">
+    <span class="eyebrow">Residenza storica · cuore del Veneto</span>
+    <h1 class="display">Un parco intorno, Venezia a un passo.</h1>
+    <p>Una dimora ottocentesca rinnovata, immersa nel verde con piscina e vasche idromassaggio. Il punto di partenza ideale per Venezia, la Riviera del Brenta e le città d'arte del Veneto.</p>
+  </div>
+  <div class="scroll-cue">Scorri<div class="line"></div></div>
+</section>
+
+<div class="booking" id="prenota">
+  <div class="booking-card reveal">
+    <div class="field"><label for="in">Arrivo</label><input type="date" id="in" /></div>
+    <div class="field"><label for="out">Partenza</label><input type="date" id="out" /></div>
+    <div class="field"><label for="g">Ospiti</label>
+      <select id="g"><option>2 adulti</option><option>1 adulto</option><option>2 adulti · 1 bambino</option><option>2 adulti · 2 bambini</option><option>Famiglia / gruppo</option></select>
+    </div>
+    <button class="btn" id="bookBtn">Verifica disponibilità</button>
+  </div>
+  <p class="booking-note" id="bookNote">Prenoti in <b>30 secondi</b>, senza commissioni · La piscina è inclusa solo prenotando da qui</p>
+</div>
+
+<section class="block" id="storia">
+  <div class="wrap story">
+    <div class="story-figure reveal">
+      <img data-par="0.05" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/villa-notturna.jpg" alt="La Villa Giustinian di sera" onerror="this.style.display='none'">
+      <span class="tag">Mirano · Riviera del Brenta</span>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">La nostra storia</span>
+      <h2>Una villa veneta<br>che vive ancora.</h2>
+      <div class="rule"></div>
+      <p>Villa Giustinian custodisce l'eleganza tranquilla delle dimore di campagna venete: soffitti alti, luce che filtra dal parco, e un silenzio raro a così pochi minuti dalla laguna.</p>
+      <p>Recentemente rinnovata, oggi è un hotel intimo dove il fascino dell'antico incontra la comodità di chi viaggia oggi — biciclette sempre a disposizione, transfer per gli aeroporti di Venezia e Treviso, e un parco tutto da vivere.</p>
+      <p class="lead mt-m">«Dormi nel verde, ti svegli a quindici minuti da San Marco.»</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <div class="pillars reveal">
+      <div class="pillar"><span class="num">01</span><h3>Il Parco</h3><p>Un'oasi verde con piscina esterna, vasche idromassaggio e angoli di quiete sotto gli alberi secolari.</p></div>
+      <div class="pillar"><span class="num">02</span><h3>Venezia vicina</h3><p>Bus per Venezia ogni 20 minuti. In un quarto d'ora a Mestre; poco oltre Treviso, Padova, Verona.</p></div>
+      <div class="pillar"><span class="num">03</span><h3>In bicicletta</h3><p>Percorsi lungo il Sile e la Riviera del Brenta. Le nostre bici sono sempre a disposizione, gratis.</p></div>
+      <div class="pillar"><span class="num">04</span><h3>Pet friendly</h3><p>Anche gli amici a quattro zampe sono i benvenuti. Viaggia con tutta la famiglia.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="camere" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="rooms-head reveal">
+      <div><span class="eyebrow">Le camere</span><h2 class="mt-s">Riposo, con vista sul verde.</h2></div>
+      <a href="#" class="room-link">Tutte le camere</a>
+    </div>
+    <div class="rooms">
+      <article class="room reveal">
+        <div class="room-img"><img src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-22.jpeg" alt="Camera Doppia Superior" onerror="this.style.display='none'"></div>
+        <div class="room-body"><h3>Doppia Superior</h3><div class="room-meta"><span>Vista parco</span><span>fino a 2</span></div><p>La più richiesta: spaziosa, luminosa e affacciata sul parco. Il risveglio migliore prima di Venezia.</p><span class="room-link">Scopri</span></div>
+      </article>
+      <article class="room reveal">
+        <div class="room-img"></div>
+        <div class="room-body"><h3>Suite</h3><div class="room-meta"><span>Idromassaggio</span><span>fino a 3</span></div><p>Per chi cerca qualcosa in più: ambienti ampi, dettagli curati e l'atmosfera della dimora storica.</p><span class="room-link">Scopri</span></div>
+      </article>
+      <article class="room reveal">
+        <div class="room-img"></div>
+        <div class="room-body"><h3>Family Room</h3><div class="room-meta"><span>Per famiglie</span><span>fino a 4</span></div><p>Lo spazio giusto per i più piccoli, a due passi dalla piscina. Pensata per chi viaggia coi bambini.</p><span class="room-link">Scopri</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="piscina">
+  <div class="feature-sticky">
+    <img class="feature-img" id="featureImg" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-22.jpeg" alt="La piscina nel parco" onerror="this.style.display='none'">
+    <div class="wrap feature-content" id="featureContent">
+      <span class="eyebrow">Piscina &amp; Sporting Club</span>
+      <h2>L'estate, all'ombra del parco.</h2>
+      <p>Una piscina esterna nel verde, vasche idromassaggio e lo spazio per rallentare. Dal 1° giugno al 15 settembre, ogni giorno dalle 9 alle 19.</p>
+      <div class="feature-info">
+        <div><span class="k">1 Giu — 15 Set</span><span class="l">Stagione aperta</span></div>
+        <div><span class="k">9 — 19</span><span class="l">Tutti i giorni</span></div>
+        <div><span class="k">Inclusa</span><span class="l">Per chi prenota dal sito</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="dintorni">
+  <div class="wrap">
+    <div class="center reveal"><span class="eyebrow center">Da qui parti per</span><h2 class="mt-s">Il Veneto, tutto a portata di mano.</h2></div>
+    <div class="around">
+      <a class="place reveal" href="#"><img src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/villa-notturna.jpg" alt="Venezia" onerror="this.style.display='none'"><div class="place-body"><span class="min">15 minuti</span><h3>Venezia</h3></div></a>
+      <a class="place reveal" href="#"><img src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-10.jpeg" alt="Riviera del Brenta" onerror="this.style.display='none'"><div class="place-body"><span class="min">in bicicletta</span><h3>Riviera del Brenta</h3></div></a>
+      <a class="place reveal" href="#"><img src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-22.jpeg" alt="Treviso" onerror="this.style.display='none'"><div class="place-body"><span class="min">20 minuti</span><h3>Treviso &amp; il Sile</h3></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="mappa" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="center reveal"><span class="eyebrow center">Dove siamo</span><h2 class="mt-s">Quindici minuti da Venezia,<br>il Veneto tutto intorno.</h2></div>
+    <div class="geo">
+      <div class="geo-map reveal">
+        <svg viewBox="0 0 520 440" role="img" aria-label="Mappa schematica: Villa Giustinian a Mirano e le distanze verso Venezia, Mestre, Treviso, Padova e gli aeroporti" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="260" cy="220" r="178" fill="none" stroke="var(--brass)" stroke-opacity=".16" stroke-dasharray="2 7"/>
+          <circle cx="260" cy="220" r="118" fill="none" stroke="var(--brass)" stroke-opacity=".11" stroke-dasharray="2 7"/>
+          <g stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="3 5" stroke-opacity=".55">
+            <line x1="260" y1="220" x2="260" y2="78"/>
+            <line x1="260" y1="220" x2="388" y2="150"/>
+            <line x1="260" y1="220" x2="388" y2="290"/>
+            <line x1="260" y1="220" x2="260" y2="362"/>
+            <line x1="260" y1="220" x2="132" y2="290"/>
+            <line x1="260" y1="220" x2="132" y2="150"/>
+          </g>
+          <g fill="var(--brass)">
+            <circle cx="260" cy="74" r="5"/>
+            <circle cx="392" cy="148" r="5"/>
+            <circle cx="392" cy="292" r="5"/>
+            <circle cx="260" cy="366" r="5"/>
+            <circle cx="128" cy="292" r="5"/>
+            <circle cx="128" cy="148" r="5"/>
+          </g>
+          <g style="font-family:var(--display)" fill="var(--ink)" font-size="19">
+            <text x="260" y="56" text-anchor="middle">Treviso</text>
+            <text x="404" y="146" text-anchor="start">Aer. Marco Polo</text>
+            <text x="404" y="290" text-anchor="start">Venezia</text>
+            <text x="260" y="392" text-anchor="middle">Mestre</text>
+            <text x="116" y="290" text-anchor="end">Padova</text>
+            <text x="116" y="146" text-anchor="end">Aer. Treviso</text>
+          </g>
+          <g style="font-family:var(--sans)" fill="var(--brass)" font-size="11" font-weight="700" letter-spacing="1">
+            <text x="260" y="40" text-anchor="middle">25 MIN</text>
+            <text x="404" y="162" text-anchor="start">20 MIN</text>
+            <text x="404" y="306" text-anchor="start">25 MIN</text>
+            <text x="260" y="408" text-anchor="middle">15 MIN</text>
+            <text x="116" y="306" text-anchor="end">25 MIN</text>
+            <text x="116" y="162" text-anchor="end">30 MIN</text>
+          </g>
+          <g>
+            <rect x="174" y="199" width="172" height="48" rx="24" fill="var(--park-deep)"/>
+            <text x="260" y="221" text-anchor="middle" style="font-family:var(--display)" fill="var(--paper)" font-size="18" font-weight="600">Villa Giustinian</text>
+            <text x="260" y="237" text-anchor="middle" style="font-family:var(--sans)" fill="var(--brass-lite)" font-size="9" letter-spacing="2" font-weight="600">MIRANO · VENEZIA</text>
+          </g>
+        </svg>
+      </div>
+      <div class="geo-lists reveal">
+        <div class="geo-block">
+          <div class="sub">In auto, bus &amp; treno</div>
+          <ul class="times">
+            <li><span><span class="dest">Mestre</span><span class="mode">Stazione FS e tangenziale</span></span><span class="dur">15 min</span></li>
+            <li><span><span class="dest">Venezia · Piazzale Roma</span><span class="mode">Bus diretto da Mirano ogni 20′</span></span><span class="dur">25 min</span></li>
+            <li><span><span class="dest">Aeroporto Marco Polo</span><span class="mode">Venezia (VCE) · transfer su richiesta</span></span><span class="dur">20 min</span></li>
+            <li><span><span class="dest">Treviso &amp; il Sile</span><span class="mode">Centro storico e mura</span></span><span class="dur">25 min</span></li>
+            <li><span><span class="dest">Padova</span><span class="mode">Cappella degli Scrovegni</span></span><span class="dur">25 min</span></li>
+            <li><span><span class="dest">Aeroporto Canova</span><span class="mode">Treviso (TSF) · voli low cost</span></span><span class="dur">30 min</span></li>
+          </ul>
+        </div>
+        <div class="geo-block">
+          <div class="sub">In bicicletta · bici incluse</div>
+          <ul class="times">
+            <li><span><span class="dest">Riviera del Brenta</span><span class="mode">Ville venete lungo il Naviglio</span></span><span class="dur">dal cancello</span></li>
+            <li><span><span class="dest">Anello del Sile · GiraSile</span><span class="mode">Parco naturale fluviale</span></span><span class="dur">cicloturismo</span></li>
+            <li><span><span class="dest">Mirano centro</span><span class="mode">Caffè, botteghe, la piazza</span></span><span class="dur">5 min</span></li>
+          </ul>
+          <p class="geo-note">Le nostre <b>biciclette sono gratuite</b>: lascia l'auto in hotel e parti dal cancello.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wed" id="matrimoni">
+  <div class="wed-text reveal">
+    <div>
+      <span class="eyebrow">Matrimoni &amp; eventi</span>
+      <h2 class="mt-s">Il vostro giorno,<br>nel parco di una villa.</h2>
+      <div class="rule"></div>
+      <p>Ricevimenti, feste e cerimonie nella cornice di una dimora storica circondata dal verde. Spazi all'aperto, eleganza d'altri tempi e un'organizzazione che pensa a tutto.</p>
+      <a href="#prenota" class="btn" style="margin-top:28px">Richiedi un preventivo</a>
+    </div>
+  </div>
+  <div class="wed-img reveal"><img data-par="0.05" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-10.jpeg" alt="Matrimoni a Villa Giustinian" onerror="this.style.display='none'"></div>
+</section>
+
+<section class="block" id="eventi">
+  <div class="wrap">
+    <div class="rooms-head reveal">
+      <div><span class="eyebrow">Stagioni &amp; eventi</span><h2 class="mt-s">C'è sempre un motivo<br>per scegliere le date.</h2></div>
+      <a href="#prenota" class="room-link">Verifica disponibilità</a>
+    </div>
+    <div class="agenda reveal">
+      <div class="agenda-row feat">
+        <div class="agenda-when">1 Giu — 15 Set<small>Ogni giorno 9–19</small></div>
+        <div class="agenda-main"><h3>Stagione in piscina</h3><p>La piscina nel parco e le vasche idromassaggio aprono per l'estate — inclusa per chi prenota dal sito ufficiale.</p></div>
+        <a href="#prenota" class="agenda-cta">Prenota l'estate</a>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-when">Febbraio<small>Carnevale</small></div>
+        <div class="agenda-main"><h3>Carnevale di Venezia</h3><p>Maschere, feste e atmosfera unica in laguna. Dormi nel verde e raggiungi Venezia in giornata, lontano dalla calca.</p></div>
+        <a href="#prenota" class="agenda-cta">Trova le date</a>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-when">Luglio<small>Terza domenica</small></div>
+        <div class="agenda-main"><h3>Festa del Redentore</h3><p>La notte dei fuochi d'artificio sul Bacino di San Marco, una delle feste più amate dai veneziani.</p></div>
+        <a href="#prenota" class="agenda-cta">Trova le date</a>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-when">Ago — Set<small>Lido di Venezia</small></div>
+        <div class="agenda-main"><h3>Mostra del Cinema</h3><p>Il festival del cinema al Lido: anteprime e red carpet. Un buen retiro elegante dopo le proiezioni.</p></div>
+        <a href="#prenota" class="agenda-cta">Trova le date</a>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-when">Settembre<small>Prima domenica</small></div>
+        <div class="agenda-main"><h3>Regata Storica</h3><p>Il corteo di imbarcazioni d'epoca sul Canal Grande: storia, colori e sfide di voga.</p></div>
+        <a href="#prenota" class="agenda-cta">Trova le date</a>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-when">Ottobre<small>Venicemarathon</small></div>
+        <div class="agenda-main"><h3>Venice Marathon</h3><p>Da Stra a Venezia lungo la Riviera del Brenta: 42 km che passano a pochi minuti da noi. Base ideale per atleti e accompagnatori.</p></div>
+        <a href="#prenota" class="agenda-cta">Trova le date</a>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-when">Tutto l'anno<small>Su misura</small></div>
+        <div class="agenda-main"><h3>Matrimoni &amp; ricevimenti</h3><p>Il vostro giorno nel parco di una villa veneta: spazi all'aperto, eleganza d'altri tempi e un'organizzazione che pensa a tutto.</p></div>
+        <a href="#matrimoni" class="agenda-cta">Scopri di più</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="direct">
+  <div class="reveal">
+    <span class="eyebrow center" style="color:rgba(255,255,255,.85)">Prenota diretto</span>
+    <h2>Il prezzo migliore è sempre qui.</h2>
+    <p>Prenotando dal sito ufficiale hai la piscina inclusa, nessuna commissione e la miglior tariffa garantita: trovi di meglio? Te lo scontiamo del 10%.</p>
+    <a href="#prenota" class="btn">Verifica le date</a>
+  </div>
+</section>
+
+<div class="mini-book" id="miniBook" aria-hidden="true">
+  <div class="mini-inner">
+    <span class="mini-prop"><b>Villa Giustinian</b><span class="long"> · piscina inclusa prenotando qui</span></span>
+    <div class="mini-fields">
+      <div class="mf"><label>Arrivo</label><input type="date" id="min"></div>
+      <div class="mf"><label>Partenza</label><input type="date" id="mout"></div>
+      <div class="mf" style="border-right:0"><label>Ospiti</label>
+        <select id="mg"><option>2 adulti</option><option>1 adulto</option><option>2 adulti · 1 bambino</option><option>Famiglia / gruppo</option></select>
+      </div>
+    </div>
+    <button class="btn" id="miniBtn">Verifica disponibilità</button>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div><div class="name">Villa Giustinian</div><p style="margin-top:14px;max-width:30ch;font-size:.9rem">Park Hotel con piscina a Mirano, nel cuore del Veneto, a 15 minuti da Venezia.</p></div>
+      <div><h4>Hotel</h4><ul><li><a href="#storia">La Villa</a></li><li><a href="#camere">Camere</a></li><li><a href="#piscina">Piscina &amp; Parco</a></li><li><a href="#matrimoni">Matrimoni</a></li></ul></div>
+      <div><h4>Informazioni</h4><ul><li><a href="#mappa">Come raggiungerci</a></li><li><a href="#">Offerte speciali</a></li><li><a href="#">Domande frequenti</a></li><li><a href="#">Animali ammessi</a></li></ul></div>
+      <div class="foot-contact"><h4>Contatti</h4><p>Via Miranese 85<br>30035 Mirano (VE)</p><p><a href="tel:+390415700200">+39 041 5700200</a></p><p><a href="mailto:info@villagiustinian.com">info@villagiustinian.com</a></p></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Park Hotel Villa Giustinian · P.I. 02223240272</span>
+      <div class="socials"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">YouTube</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- PWA install -->
+<button class="install-pill" id="installPill">📲 Installa l'app</button>
+
+<!-- Concierge chat -->
+<div class="chat-teaser" id="chatTeaser">Posso aiutarti? 🌿</div>
+<button class="chat-fab" id="chatFab" aria-label="Assistente virtuale">
+  <span class="badge"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 9 9 0 0 1-3.8-.8L3 21l1.8-5.7A8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>
+</button>
+<div class="chat-panel" id="chatPanel" aria-hidden="true">
+  <div class="chat-head">
+    <div class="chat-ava">🌿</div>
+    <div class="chat-head-txt"><strong>Assistente Villa Giustinian</strong><span><i class="dot"></i> Online ora</span></div>
+    <button class="chat-x" id="chatX" aria-label="Chiudi">×</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-input">
+    <input id="chatText" type="text" placeholder="Scrivi un messaggio…" />
+    <button id="chatSend" aria-label="Invia">➤</button>
+  </div>
+</div>
+
+<!-- Smooth scroll (loads in a real browser; falls back to native scroll if blocked) -->
+<script src="https://unpkg.com/lenis"></script>
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isMobile = function(){ return innerWidth <= 900; };
+
+  // header solid
+  var header=document.getElementById('header');
+  var onScroll=function(){ header.classList.toggle('solid', (window.scrollY||0)>40); };
+  onScroll();
+
+  // mobile menu
+  var burger=document.getElementById('burger'), menu=document.getElementById('menu');
+  burger.addEventListener('click',function(){menu.classList.toggle('open');});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
+
+  // reveals
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  // hero image fade-in
+  var heroImg=document.getElementById('heroImg');
+  if(heroImg){ if(heroImg.complete){heroImg.classList.add('show');} else {heroImg.addEventListener('load',function(){heroImg.classList.add('show');});} }
+
+  // booking demo note (shared by both bars)
+  var note=document.getElementById('bookNote'), noteHTML=note.innerHTML, t;
+  function triggerNote(){
+    note.style.opacity=0;
+    setTimeout(function(){ note.innerHTML='<b>Demo</b> — qui si collegherà il motore di prenotazione già in uso dall\'hotel'; note.style.opacity=.9; },300);
+    clearTimeout(t); t=setTimeout(function(){ note.style.opacity=0; setTimeout(function(){note.innerHTML=noteHTML;note.style.opacity=.75;},300); },3800);
+  }
+  function goTo(sel){ var el=document.querySelector(sel); if(!el) return; if(lenis){lenis.scrollTo(el,{offset:-72});} else {el.scrollIntoView({behavior:'smooth'});} }
+  document.getElementById('bookBtn').addEventListener('click', triggerNote);
+
+  // sticky compact booking bar
+  var miniBook=document.getElementById('miniBook');
+  document.getElementById('miniBtn').addEventListener('click', function(){ goTo('#prenota'); setTimeout(triggerNote,650); });
+  var cardEl=document.querySelector('.booking-card'), footEl=document.querySelector('footer');
+  var cardOut=false, footIn=false;
+  function updMini(){ var s=cardOut && !footIn; miniBook.classList.toggle('show',s); miniBook.setAttribute('aria-hidden', s?'false':'true'); document.body.classList.toggle('mini-on', s); }
+  if(cardEl) new IntersectionObserver(function(en){ cardOut=!en[0].isIntersecting; updMini(); },{threshold:0}).observe(cardEl);
+  if(footEl) new IntersectionObserver(function(en){ footIn=en[0].isIntersecting; updMini(); },{threshold:.01}).observe(footEl);
+
+  // default dates
+  try{
+    var d=new Date(), f=function(x){return x.toISOString().slice(0,10);};
+    var d2=new Date(d); d2.setDate(d2.getDate()+2);
+    document.getElementById('in').value=f(d); document.getElementById('out').value=f(d2);
+    document.getElementById('min').value=f(d); document.getElementById('mout').value=f(d2);
+  }catch(e){}
+
+  // SMOOTH SCROLL
+  var lenis=null;
+  window.addEventListener('load',function(){
+    if(window.Lenis && !reduce){
+      document.documentElement.style.scrollBehavior='auto';
+      lenis=new Lenis({lerp:0.085, wheelMultiplier:0.9, smoothWheel:true});
+      function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+      lenis.on('scroll', onScroll);
+      document.querySelectorAll('a[href^="#"]').forEach(function(a){
+        a.addEventListener('click',function(e){
+          var id=a.getAttribute('href');
+          if(id.length>1){ var el=document.querySelector(id); if(el){ e.preventDefault(); lenis.scrollTo(el,{offset:-72}); menu.classList.remove('open'); } }
+        });
+      });
+    } else {
+      window.addEventListener('scroll', onScroll, {passive:true});
+    }
+  });
+  // ensure header updates even before load
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // SCROLL-DRIVEN EFFECTS (run on real scroll position, work with or without Lenis)
+  var heroInner=document.getElementById('heroInner');
+  var parEls=[].slice.call(document.querySelectorAll('[data-par]'));
+  var feature=document.getElementById('piscina');
+  var featureImg=document.getElementById('featureImg');
+  var featureContent=document.getElementById('featureContent');
+
+  function tick(){
+    var y=window.scrollY||0, vh=innerHeight, mobile=isMobile();
+
+    if(!reduce && !mobile){
+      // hero camera push-in + text lift
+      if(heroImg && heroImg.style.display!=='none'){
+        var p=Math.min(y/vh,1);
+        heroImg.style.transform='scale('+(1.05 + p*0.16)+')';
+      }
+      if(heroInner){
+        heroInner.style.transform='translate3d(0,'+(y*-0.14)+'px,0)';
+        heroInner.style.opacity=String(Math.max(0,1 - y/(vh*0.85)));
+      }
+      // gentle parallax on framed photos
+      for(var i=0;i<parEls.length;i++){
+        var el=parEls[i], r=el.getBoundingClientRect();
+        var center=r.top + r.height/2 - vh/2;
+        var sp=parseFloat(el.getAttribute('data-par'))||0.05;
+        el.style.transform='translate3d(0,'+(center*-sp)+'px,0) scale(1.16)';
+      }
+      // pinned pool: image scale + content drift across the pin
+      if(feature && featureImg){
+        var fr=feature.getBoundingClientRect();
+        var total=fr.height - vh;
+        var prog=Math.min(1,Math.max(0,(-fr.top)/(total||1)));
+        featureImg.style.transform='scale('+(1.05 + prog*0.2)+')';
+        if(featureContent) featureContent.style.transform='translate3d(0,'+((0.5-prog)*36)+'px,0)';
+      }
+    } else {
+      // reset transforms on mobile / reduced-motion
+      if(heroImg) heroImg.style.transform='';
+      if(heroInner){heroInner.style.transform='';heroInner.style.opacity='';}
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  // ---------- CONCIERGE CHAT ----------
+  var A={
+    piscina:{t:"La nostra piscina è immersa nel parco, con vasche idromassaggio. Aperta dal 1° giugno al 15 settembre, tutti i giorni 9–19 🌞",c:[["È inclusa nel soggiorno?","piscina_inc"],["Vedi le camere","#camere"],["Scegli le date","#prenota"]]},
+    piscina_inc:{t:"Sì! La piscina è inclusa per chi prenota dal sito ufficiale — un motivo in più per prenotare diretto ✨",c:[["Scegli le date","#prenota"],["Le camere","camere"]]},
+    camere:{t:"Abbiamo tre tipologie: Doppia Superior con vista parco, Suite con idromassaggio e Family Room fino a 4 persone. Tutte affacciate sul verde.",c:[["Vedi le camere","#camere"],["Soluzioni famiglia","famiglie"],["Scegli le date","#prenota"]]},
+    famiglie:{t:"La Family Room è pensata per chi viaggia coi bambini: spazio in più e a due passi dalla piscina 👨‍👩‍👧",c:[["Scegli le date","#prenota"],["La piscina","piscina"]]},
+    prezzi:{t:"Prenotando dal sito hai la miglior tariffa garantita: se trovi di meglio altrove, te lo scontiamo del 10%. E nessuna commissione.",c:[["Scegli le date","#prenota"],["La piscina","piscina"]]},
+    venezia:{t:"Sei a soli 15 minuti da Venezia: il bus per la città parte ogni 20 minuti dal centro di Mirano 🚌",c:[["Altri collegamenti","trasporti"],["Le camere","camere"]]},
+    trasporti:{t:"Oltre al bus per Venezia, organizziamo transfer per gli aeroporti di Venezia e Treviso. E le biciclette per il Sile e la Riviera del Brenta sono gratuite 🚲",c:[["Scegli le date","#prenota"],["La piscina","piscina"]]},
+    animali:{t:"Certo, gli amici a quattro zampe sono i benvenuti 🐾",c:[["Le camere","camere"],["La piscina","piscina"]]},
+    matrimoni:{t:"Organizziamo matrimoni ed eventi nel parco della villa: spazi all'aperto ed eleganza d'altri tempi. Posso farti ricontattare per un preventivo.",c:[["Le camere","camere"],["Contatti","contatti"]]},
+    prenota:{t:"Perfetto! Scegli le date qui sotto e controllo subito le disponibilità per te 📅",c:[["Apri il calendario","#prenota"],["Prezzi e tariffe","prezzi"]]},
+    contatti:{t:"Siamo in Via Miranese 85, Mirano (VE).\n📞 +39 041 5700200\n✉️ info@villagiustinian.com",c:[["Scegli le date","#prenota"]]},
+    fallback:{t:"Su questa nello specifico ti risponde meglio la reception (+39 041 5700200). Intanto posso aiutarti con:",c:[["La piscina","piscina"],["Le camere","camere"],["Disponibilità","prenota"]]}
+  };
+  function matchIntent(x){ x=x.toLowerCase();
+    if(/piscin|nuot|bagno/.test(x)) return 'piscina';
+    if(/inclus|grat/.test(x)) return 'piscina_inc';
+    if(/famigl|bambin|figli/.test(x)) return 'famiglie';
+    if(/camer|stanz|suite|dormi|letto/.test(x)) return 'camere';
+    if(/prezz|cost|tariff|quant/.test(x)) return 'prezzi';
+    if(/venezi|laguna|san marco/.test(x)) return 'venezia';
+    if(/bus|tren|aeroport|transfer|arriv|raggiung|bici/.test(x)) return 'trasporti';
+    if(/anima|cane|gatt|\bpet\b/.test(x)) return 'animali';
+    if(/matrimon|event|cerimon|festa/.test(x)) return 'matrimoni';
+    if(/prenot|disponib|\bdate\b|calendar/.test(x)) return 'prenota';
+    if(/contatt|telefon|email|mail|indirizz/.test(x)) return 'contatti';
+    return 'fallback';
+  }
+  var fab=document.getElementById('chatFab'), panel=document.getElementById('chatPanel'), xBtn=document.getElementById('chatX'),
+      cbody=document.getElementById('chatBody'), teaser=document.getElementById('chatTeaser'),
+      textIn=document.getElementById('chatText'), sendBtn=document.getElementById('chatSend'), opened=false;
+  function mk(cls,html){ var d=document.createElement('div'); d.className=cls; if(html!=null) d.innerHTML=html; return d; }
+  function sb(){ cbody.scrollTop=cbody.scrollHeight; }
+  function addBot(t){ var m=mk('msg bot'); m.textContent=t; cbody.appendChild(m); sb(); }
+  function addUser(t){ var m=mk('msg user'); m.textContent=t; cbody.appendChild(m); sb(); }
+  function addChips(ch){ if(!ch||!ch.length)return; var w=mk('chips'); ch.forEach(function(c){ var b=mk('chip'); b.textContent=c[0]; b.addEventListener('click',function(){ chip(c[0],c[1]); }); w.appendChild(b); }); cbody.appendChild(w); sb(); }
+  function clearChips(){ cbody.querySelectorAll('.chips').forEach(function(x){x.remove();}); }
+  function typing(cb){ var tp=mk('typing','<i></i><i></i><i></i>'); cbody.appendChild(tp); sb(); setTimeout(function(){ tp.remove(); cb(); }, 650+Math.random()*350); }
+  function answer(k){ var a=A[k]||A.fallback; typing(function(){ addBot(a.t); addChips(a.c); }); }
+  function chip(label,k){ clearChips(); addUser(label); if(k.charAt(0)==='#'){ typing(function(){ addBot('Ti porto subito lì 👇'); }); goTo(k); } else { answer(k); } }
+  function send(){ var v=textIn.value.trim(); if(!v)return; clearChips(); addUser(v); textIn.value=''; answer(matchIntent(v)); }
+  sendBtn.addEventListener('click',send);
+  textIn.addEventListener('keydown',function(e){ if(e.key==='Enter') send(); });
+  function openChat(){ panel.classList.add('open'); panel.setAttribute('aria-hidden','false'); teaser.classList.remove('show'); var bg=fab.querySelector('.badge'); if(bg)bg.style.display='none';
+    if(!opened){ opened=true; setTimeout(function(){ addBot("Ciao! Sono l'assistente di Villa Giustinian 🌿 Posso darti una mano con piscina, camere, prenotazioni e dintorni. Cosa ti serve?"); addChips([["La piscina","piscina"],["Le camere","camere"],["Disponibilità & prezzi","prenota"],["Quanto dista Venezia?","venezia"],["Animali ammessi?","animali"]]); },260); } }
+  function closeChat(){ panel.classList.remove('open'); panel.setAttribute('aria-hidden','true'); }
+  fab.addEventListener('click',function(){ panel.classList.contains('open')?closeChat():openChat(); });
+  xBtn.addEventListener('click',closeChat);
+  setTimeout(function(){ if(!opened) teaser.classList.add('show'); },4500);
+  setTimeout(function(){ teaser.classList.remove('show'); },13000);
+
+  // ---------- PWA ----------
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+  }
+  var installPill=document.getElementById('installPill'), deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault(); deferredPrompt=e; if(installPill) installPill.classList.add('show');
+  });
+  if(installPill){
+    installPill.addEventListener('click', function(){
+      if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(function(){ deferredPrompt=null; installPill.classList.remove('show'); }); }
+      else { alert('Per installare l\'app: in Safari tocca Condividi ⬆️ e poi "Aggiungi alla schermata Home".'); }
+    });
+  }
+  window.addEventListener('appinstalled', function(){ if(installPill) installPill.classList.remove('show'); });
+  // iOS has no automatic prompt — show the pill with manual instructions
+  (function(){
+    var iOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+    var inApp=('standalone' in navigator) && navigator.standalone;
+    if(iOS && !inApp && installPill){ installPill.classList.add('show'); }
+  })();
+
+})();
+</script>
+</body>
+</html>
