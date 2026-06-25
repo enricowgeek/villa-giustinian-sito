@@ -295,6 +295,33 @@
   .agenda-row.feat p{color:rgba(244,239,230,.8)}
   .agenda-row.feat .agenda-cta{color:var(--paper)}
 
+  /* recensioni */
+  .rating-line{font-size:.95rem;color:var(--park)}
+  .rating-line b{font-family:var(--display);font-size:1.35rem;color:var(--brass)}
+  .rating-line .ph{font-size:.66rem;color:rgba(34,39,31,.45);letter-spacing:.05em}
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:46px}
+  .review{background:var(--paper);border:1px solid var(--line);padding:32px 28px;display:flex;flex-direction:column;margin:0}
+  .review .stars{color:var(--brass);letter-spacing:4px;font-size:1rem;margin-bottom:16px}
+  .review blockquote{font-family:var(--display);font-style:italic;font-size:1.25rem;line-height:1.5;color:var(--park);margin:0}
+  .review .who{margin-top:auto;padding-top:20px}
+  .review .who b{display:block;color:var(--ink);font-weight:600;font-size:.92rem}
+  .review .who span{color:var(--brass);font-weight:600;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+
+  /* "Chiama" in testata */
+  .nav-call{display:inline-flex;align-items:center;gap:7px;font-size:.82rem;font-weight:600;letter-spacing:.04em;color:var(--paper);transition:color .4s}
+  header.solid .nav-call{color:var(--ink)}
+  .nav-call svg{width:15px;height:15px}
+  .nav-call:hover{color:var(--brass-lite)}
+  header.solid .nav-call:hover{color:var(--brass)}
+
+  /* FAB WhatsApp (sopra il concierge) */
+  .wa-fab{position:fixed;right:24px;bottom:94px;z-index:76;width:56px;height:56px;border-radius:50%;background:var(--park);color:var(--paper);display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px -12px rgba(22,38,30,.6);transition:bottom .4s cubic-bezier(.4,0,.2,1),transform .25s,opacity .25s}
+  .wa-fab svg{width:28px;height:28px}
+  .wa-fab:hover{transform:translateY(-2px)}
+  body.mini-on .wa-fab{bottom:166px}
+  body.chat-open .wa-fab{opacity:0;pointer-events:none;transform:translateY(10px)}
+  @media(max-width:480px){.wa-fab{right:12px}}
+
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
   .reveal.in{opacity:1;transform:none}
 
@@ -304,7 +331,7 @@
     .nav-links a{color:var(--paper)!important;font-size:1.1rem}
     .burger{display:flex;z-index:90}
     .pillars{grid-template-columns:repeat(2,1fr)}
-    .rooms,.around{grid-template-columns:1fr}
+    .rooms,.around,.reviews-grid{grid-template-columns:1fr}
     .story,.wed{grid-template-columns:1fr}
     .wed{min-height:0}.wed-img{aspect-ratio:4/3;order:-1}
     .booking-card{grid-template-columns:1fr 1fr}
@@ -347,6 +374,7 @@
       <a href="#dintorni">Dintorni</a>
       <a href="#eventi">Eventi</a>
       <span class="lang"><b>IT</b> · EN · DE</span>
+      <a href="tel:+390415700200" class="nav-call" aria-label="Chiama l'hotel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Chiama</span></a>
       <a href="#prenota" class="btn">Prenota</a>
     </nav>
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -604,6 +632,35 @@
   </div>
 </section>
 
+<!-- RECENSIONI · PLACEHOLDER: sostituire con citazioni reali (Google/TripAdvisor/Booking) e poi widget live.
+     NB: NON aggiungere JSON-LD Review finché non sono recensioni vere (Google penalizza i dati falsi). -->
+<section class="block reviews" id="recensioni" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="eyebrow center">Le voci dei nostri ospiti</span>
+      <h2 class="mt-s">Chi sceglie la villa, torna.</h2>
+      <p class="rating-line mt-s"><b>4,8 / 5</b> · media su Google, Booking e TripAdvisor <span class="ph">(dati placeholder)</span></p>
+    </div>
+    <div class="reviews-grid">
+      <figure class="review reveal">
+        <div class="stars" aria-label="5 su 5">★★★★★</div>
+        <blockquote>«Svegliarsi nel parco e in mezz'ora essere a San Marco: un lusso raro. Piscina splendida e personale gentilissimo.»</blockquote>
+        <figcaption class="who"><b>Giulia &amp; Marco</b><span>Milano · Google</span></figcaption>
+      </figure>
+      <figure class="review reveal">
+        <div class="stars" aria-label="5 su 5">★★★★★</div>
+        <blockquote>«Perfetto in famiglia: i bambini non volevano più uscire dalla piscina e Venezia è comodissima in giornata. Torneremo.»</blockquote>
+        <figcaption class="who"><b>Famiglia Berti</b><span>Verona · Booking</span></figcaption>
+      </figure>
+      <figure class="review reveal">
+        <div class="stars" aria-label="5 su 5">★★★★★</div>
+        <blockquote>«A historic villa with a real park, 15 minutes from Venice. Quiet, elegant, and the best value we found. Highly recommended.»</blockquote>
+        <figcaption class="who"><b>Andreas K.</b><span>München · TripAdvisor</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section class="direct">
   <div class="reveal">
     <span class="eyebrow center" style="color:rgba(255,255,255,.85)">Prenota diretto</span>
@@ -633,7 +690,7 @@
       <div><div class="name">Villa Giustinian</div><p style="margin-top:14px;max-width:30ch;font-size:.9rem">Park Hotel con piscina a Mirano, nel cuore del Veneto, a 15 minuti da Venezia.</p></div>
       <div><h4>Hotel</h4><ul><li><a href="#storia">La Villa</a></li><li><a href="#camere">Camere</a></li><li><a href="#piscina">Piscina &amp; Parco</a></li><li><a href="#matrimoni">Matrimoni</a></li></ul></div>
       <div><h4>Informazioni</h4><ul><li><a href="#mappa">Come raggiungerci</a></li><li><a href="#">Offerte speciali</a></li><li><a href="#">Domande frequenti</a></li><li><a href="#">Animali ammessi</a></li></ul></div>
-      <div class="foot-contact"><h4>Contatti</h4><p>Via Miranese 85<br>30035 Mirano (VE)</p><p><a href="tel:+390415700200">+39 041 5700200</a></p><p><a href="mailto:info@villagiustinian.com">info@villagiustinian.com</a></p></div>
+      <div class="foot-contact"><h4>Contatti</h4><p>Via Miranese 85<br>30035 Mirano (VE)</p><p><a href="tel:+390415700200">+39 041 5700200</a></p><p><a href="https://wa.me/390000000000" target="_blank" rel="noopener">WhatsApp</a></p><p><a href="mailto:info@villagiustinian.com">info@villagiustinian.com</a></p></div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 Park Hotel Villa Giustinian · P.I. 02223240272</span>
@@ -644,6 +701,11 @@
 
 <!-- PWA install -->
 <button class="install-pill" id="installPill">📲 Installa l'app</button>
+
+<!-- WhatsApp · PLACEHOLDER numero: sostituire 390000000000 col numero WhatsApp reale dell'hotel -->
+<a class="wa-fab" id="waFab" href="https://wa.me/390000000000?text=Salve%2C%20vorrei%20informazioni%20sulla%20disponibilit%C3%A0%20a%20Villa%20Giustinian" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+</a>
 
 <!-- Concierge chat -->
 <div class="chat-teaser" id="chatTeaser">Posso aiutarti? 🌿</div>
@@ -915,9 +977,9 @@
   }
   sendBtn.addEventListener('click',send);
   textIn.addEventListener('keydown',function(e){ if(e.key==='Enter') send(); });
-  function openChat(){ panel.classList.add('open'); panel.setAttribute('aria-hidden','false'); teaser.classList.remove('show'); var bg=fab.querySelector('.badge'); if(bg)bg.style.display='none';
+  function openChat(){ panel.classList.add('open'); panel.setAttribute('aria-hidden','false'); document.body.classList.add('chat-open'); teaser.classList.remove('show'); var bg=fab.querySelector('.badge'); if(bg)bg.style.display='none';
     if(!opened){ opened=true; setTimeout(function(){ addBot("Ciao! Sono l'assistente di Villa Giustinian 🌿 Posso darti una mano con piscina, camere, prenotazioni e dintorni. Cosa ti serve?"); addChips([["La piscina","piscina"],["Le camere","camere"],["Disponibilità & prezzi","prenota"],["Quanto dista Venezia?","venezia"],["Animali ammessi?","animali"]]); },260); } }
-  function closeChat(){ panel.classList.remove('open'); panel.setAttribute('aria-hidden','true'); }
+  function closeChat(){ panel.classList.remove('open'); panel.setAttribute('aria-hidden','true'); document.body.classList.remove('chat-open'); }
   fab.addEventListener('click',function(){ panel.classList.contains('open')?closeChat():openChat(); });
   xBtn.addEventListener('click',closeChat);
   setTimeout(function(){ if(!opened) teaser.classList.add('show'); },4500);
