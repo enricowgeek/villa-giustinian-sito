@@ -97,7 +97,7 @@
   .villa-strip .vs-item:hover img{transform:scale(1.05)}
   @media(max-width:700px){.villa-strip{grid-template-columns:1fr 1fr;gap:2px}}
   .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,38,30,.55) 0%,rgba(22,38,30,.18) 30%,rgba(22,38,30,.5) 62%,rgba(22,38,30,.88) 100%)}
-  .hero-inner{position:relative;z-index:2;width:100%;padding-bottom:170px;will-change:transform,opacity}
+  .hero-inner{position:relative;z-index:2;width:100%;padding-bottom:clamp(200px,32vh,330px);will-change:transform,opacity}
   .hero h1{color:var(--paper);max-width:14ch;margin:.35em 0 .4em;text-shadow:var(--tshadow)}
   .hero .eyebrow{color:#EAD2A0;font-size:.78rem;letter-spacing:.24em;background:rgba(16,30,24,.42);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);padding:9px 18px;border-radius:30px;border:1px solid rgba(203,168,104,.34);text-shadow:0 1px 4px rgba(0,0,0,.55)}
   .hero .eyebrow::before{background:var(--brass-lite);box-shadow:0 1px 3px rgba(22,38,30,.5)}
@@ -108,7 +108,7 @@
   @keyframes cue{0%{top:-38px}60%,100%{top:38px}}
 
   /* booking */
-  .booking{position:relative;z-index:30;margin:-118px auto 0;max-width:var(--maxw);padding:0 28px}
+  .booking{position:fixed;left:0;right:0;bottom:18px;z-index:55;max-width:var(--maxw);margin:0 auto;padding:0 28px;will-change:transform}
   .booking-card{background:var(--paper);border:1px solid var(--brass-lite);border-top:3px solid var(--brass);box-shadow:0 34px 74px -26px rgba(22,38,30,.62),0 0 48px -10px rgba(168,124,61,.45);display:grid;grid-template-columns:1.1fr 1.1fr 1fr auto}
   .field{padding:18px 24px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:5px}
   .field label{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);font-weight:600}
@@ -121,6 +121,9 @@
   /* sticky compact booking bar */
   .mini-book{position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(244,239,230,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);box-shadow:0 -12px 40px -24px rgba(22,38,30,.55);transform:translateY(115%);transition:transform .45s cubic-bezier(.4,0,.2,1);padding:12px 0;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
   .mini-book.show{transform:translateY(0)}
+  /* desktop: barra grande flottante che si aggancia in basso (la mini-bar serve solo su mobile) */
+  @media(min-width:901px){.booking-note{display:none}.mini-book{display:none!important}}
+  @media(max-width:900px){.booking{position:static;bottom:auto;margin:-118px auto 0;transform:none!important;will-change:auto}}
   .mini-inner{max-width:var(--maxw);margin:0 auto;padding:0 28px;display:flex;align-items:center;gap:18px;justify-content:space-between}
   .mini-prop{font-size:.82rem;color:var(--park);font-weight:500;letter-spacing:.01em;white-space:nowrap}
   .mini-prop b{font-family:var(--display);font-size:1.1rem;color:var(--ink);font-weight:600}
@@ -831,7 +834,10 @@
     flashNote('Ti porto sul sito ufficiale — <b>piscina inclusa</b> ↗');
     openUrl(buildBookingUrl(from,to,rooms));
   }
-  function goTo(sel){ var el=document.querySelector(sel); if(!el) return; if(lenis){lenis.scrollTo(el,{offset:-72});} else {el.scrollIntoView({behavior:'smooth'});} }
+  function goTo(sel){
+    if(sel==='#prenota' && innerWidth>900){ if(lenis){lenis.scrollTo(0);} else {window.scrollTo({top:0,behavior:'smooth'});} return; }
+    var el=document.querySelector(sel); if(!el) return; if(lenis){lenis.scrollTo(el,{offset:-72});} else {el.scrollIntoView({behavior:'smooth'});}
+  }
   document.getElementById('bookBtn').addEventListener('click', function(){
     openBooking(document.getElementById('in'),document.getElementById('out'),document.getElementById('g'));
   });
@@ -845,7 +851,7 @@
   });
   var cardEl=document.querySelector('.booking-card'), footEl=document.querySelector('footer');
   var cardOut=false, footIn=false;
-  function updMini(){ var s=cardOut && !footIn; miniBook.classList.toggle('show',s); miniBook.setAttribute('aria-hidden', s?'false':'true'); document.body.classList.toggle('mini-on', s); }
+  function updMini(){ if(innerWidth>900){return;} var s=cardOut && !footIn; miniBook.classList.toggle('show',s); miniBook.setAttribute('aria-hidden', s?'false':'true'); document.body.classList.toggle('mini-on', s); }
   if(cardEl) new IntersectionObserver(function(en){ cardOut=!en[0].isIntersecting; updMini(); },{threshold:0}).observe(cardEl);
   if(footEl) new IntersectionObserver(function(en){ footIn=en[0].isIntersecting; updMini(); },{threshold:.01}).observe(footEl);
 
@@ -869,7 +875,7 @@
       document.querySelectorAll('a[href^="#"]').forEach(function(a){
         a.addEventListener('click',function(e){
           var id=a.getAttribute('href');
-          if(id.length>1){ var el=document.querySelector(id); if(el){ e.preventDefault(); lenis.scrollTo(el,{offset:-72}); menu.classList.remove('open'); } }
+          if(id.length>1){ var el=document.querySelector(id); if(el){ e.preventDefault(); goTo(id); menu.classList.remove('open'); } }
         });
       });
     } else {
@@ -886,6 +892,7 @@
   var feature=document.getElementById('piscina');
   var featureImg=document.getElementById('featureImg');
   var featureContent=document.getElementById('featureContent');
+  var bookingEl=document.getElementById('prenota');
 
   function tick(){
     var y=window.scrollY||0, vh=innerHeight, mobile=isMobile();
@@ -915,10 +922,17 @@
         featureImg.style.transform='scale('+(1.05 + prog*0.2)+')';
         if(featureContent) featureContent.style.transform='translate3d(0,'+((0.5-prog)*36)+'px,0)';
       }
+      // barra prenotazione flottante: parte alta nell'hero, scende e si aggancia in basso
+      if(bookingEl){
+        if(footIn){ bookingEl.style.transform='translateY(200px)'; }
+        else { var lift=vh*0.12, thr=vh*0.6, bp=Math.min(1,y/thr); bookingEl.style.transform='translateY('+(-lift*(1-bp))+'px)'; }
+        document.body.classList.toggle('mini-on', y>vh*0.42 && !footIn);
+      }
     } else {
       // reset transforms on mobile / reduced-motion
       if(heroMedia) heroMedia.style.transform='';
       if(heroInner){heroInner.style.transform='';heroInner.style.opacity='';}
+      if(bookingEl) bookingEl.style.transform='';
     }
     requestAnimationFrame(tick);
   }
