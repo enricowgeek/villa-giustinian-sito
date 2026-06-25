@@ -72,8 +72,16 @@
 
   /* hero */
   .hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:flex-end;margin-top:-92px;padding-top:92px;background:var(--park-deep);overflow:hidden}
-  .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);will-change:transform;opacity:0;transition:opacity 1.2s ease}
+  .hero-media{position:absolute;inset:0;transform:scale(1.05);will-change:transform}
+  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;background:transparent}
+  .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity 1.2s ease}
   .hero-img.show{opacity:1}
+  /* fascia foto della villa (plug-and-play: sostituire gli src con le foto pro) */
+  .villa-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:clamp(54px,7vw,96px)}
+  .villa-strip .vs-item{position:relative;aspect-ratio:3/4;overflow:hidden;margin:0;background:linear-gradient(135deg,var(--park),var(--park-deep))}
+  .villa-strip .vs-item img{width:100%;height:100%;object-fit:cover;transition:transform .9s ease}
+  .villa-strip .vs-item:hover img{transform:scale(1.05)}
+  @media(max-width:700px){.villa-strip{grid-template-columns:1fr 1fr;gap:2px}}
   .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,38,30,.55) 0%,rgba(22,38,30,.18) 30%,rgba(22,38,30,.5) 62%,rgba(22,38,30,.88) 100%)}
   .hero-inner{position:relative;z-index:2;width:100%;padding-bottom:170px;will-change:transform,opacity}
   .hero h1{color:var(--paper);max-width:14ch;margin:.35em 0 .4em;text-shadow:var(--tshadow)}
@@ -319,7 +327,7 @@
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important}
     .reveal{opacity:1;transform:none;transition:none}
-    .hero-img{opacity:1}
+    .hero-img{opacity:1}.hero-video{display:none}
   }
 </style>
 </head>
@@ -346,7 +354,17 @@
 </header>
 
 <section class="hero">
-  <img class="hero-img" id="heroImg" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-10.jpeg" alt="Park Hotel Villa Giustinian immerso nel parco" onerror="this.style.display='none'">
+  <!-- HERO MEDIA · plug-and-play per la DRONATA:
+       1) metti i file in /assets (hero-drone.webm + .mp4) e scommenta i <source> qui sotto
+       2) aggiungi sull'elemento <video> l'attributo  poster="assets/hero-poster.jpg"  (1° frame / foto pro)
+       Finché i file non ci sono, il <video> resta trasparente e si vede l'immagine sotto (o lo sfondo verde). -->
+  <div class="hero-media" id="heroMedia">
+    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="none" onerror="this.style.display='none'">
+      <!-- <source src="assets/hero-drone.webm" type="video/webm"> -->
+      <!-- <source src="assets/hero-drone.mp4"  type="video/mp4"> -->
+    </video>
+    <img class="hero-img" id="heroImg" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-10.jpeg" alt="Park Hotel Villa Giustinian immerso nel parco" onerror="this.style.display='none'">
+  </div>
   <div class="wrap hero-inner" id="heroInner">
     <span class="eyebrow">Residenza storica · cuore del Veneto</span>
     <h1 class="display">Un parco intorno, Venezia a un passo.</h1>
@@ -366,6 +384,15 @@
   </div>
   <p class="booking-note" id="bookNote">Prenoti in <b>30 secondi</b>, senza commissioni · La piscina è inclusa solo prenotando da qui</p>
 </div>
+
+<!-- FASCIA FOTO DELLA VILLA · plug-and-play: sostituisci gli src con le foto pro (facciata, dettagli, parco, piscina).
+     L'onerror lascia lo sfondo verde elegante finché non arrivano i contenuti nuovi. -->
+<section class="villa-strip" aria-label="La villa in immagini">
+  <figure class="vs-item"><img loading="lazy" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-10.jpeg" alt="La facciata di Villa Giustinian" onerror="this.style.display='none'"></figure>
+  <figure class="vs-item"><img loading="lazy" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/villa-notturna.jpg" alt="La villa di sera" onerror="this.style.display='none'"></figure>
+  <figure class="vs-item"><img loading="lazy" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-22.jpeg" alt="La piscina nel parco" onerror="this.style.display='none'"></figure>
+  <figure class="vs-item"><img loading="lazy" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-10.jpeg" alt="Un angolo del parco secolare" onerror="this.style.display='none'"></figure>
+</section>
 
 <section class="block" id="storia">
   <div class="wrap story">
@@ -663,6 +690,9 @@
   // hero image fade-in
   var heroImg=document.getElementById('heroImg');
   if(heroImg){ if(heroImg.complete){heroImg.classList.add('show');} else {heroImg.addEventListener('load',function(){heroImg.classList.add('show');});} }
+  // hero video: rispetta reduced-motion (niente autoplay) — mostra l'immagine fallback
+  var heroVideo=document.getElementById('heroVideo');
+  if(reduce && heroVideo){ try{ heroVideo.removeAttribute('autoplay'); heroVideo.pause(); }catch(e){} }
 
   // booking demo note (shared by both bars)
   var note=document.getElementById('bookNote'), noteHTML=note.innerHTML, t;
@@ -715,6 +745,7 @@
 
   // SCROLL-DRIVEN EFFECTS (run on real scroll position, work with or without Lenis)
   var heroInner=document.getElementById('heroInner');
+  var heroMedia=document.getElementById('heroMedia');
   var parEls=[].slice.call(document.querySelectorAll('[data-par]'));
   var feature=document.getElementById('piscina');
   var featureImg=document.getElementById('featureImg');
@@ -725,9 +756,9 @@
 
     if(!reduce && !mobile){
       // hero camera push-in + text lift
-      if(heroImg && heroImg.style.display!=='none'){
+      if(heroMedia){
         var p=Math.min(y/vh,1);
-        heroImg.style.transform='scale('+(1.05 + p*0.16)+')';
+        heroMedia.style.transform='scale('+(1.05 + p*0.16)+')';
       }
       if(heroInner){
         heroInner.style.transform='translate3d(0,'+(y*-0.14)+'px,0)';
@@ -750,7 +781,7 @@
       }
     } else {
       // reset transforms on mobile / reduced-motion
-      if(heroImg) heroImg.style.transform='';
+      if(heroMedia) heroMedia.style.transform='';
       if(heroInner){heroInner.style.transform='';heroInner.style.opacity='';}
     }
     requestAnimationFrame(tick);
