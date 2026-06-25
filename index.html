@@ -694,19 +694,52 @@
   var heroVideo=document.getElementById('heroVideo');
   if(reduce && heroVideo){ try{ heroVideo.removeAttribute('autoplay'); heroVideo.pause(); }catch(e){} }
 
-  // booking demo note (shared by both bars)
+  // ---------- PRENOTAZIONE: deep-link reale al motore ufficiale ----------
   var note=document.getElementById('bookNote'), noteHTML=note.innerHTML, t;
-  function triggerNote(){
+  var BOOK_BASE='https://www.secure-reservation.cloud/booking-engine/';
+  var PORTAL='villagiustinian-mirano', LANG='it';
+  // mappa "Ospiti" -> param rooms (A=adulto, C=bambino; convenzione del fornitore: es. 2 adulti = A,A).
+  // NB: encoding bambini/multi-camera da confermare con Kosmosol; in ogni caso il motore apre con le date giuste.
+  function guestsToRooms(label){
+    label=(label||'').toLowerCase();
+    var adults = /1 adulto(?!.*2 adulti)/.test(label) && !/2 adulti/.test(label) ? 1 : 2;
+    var kids = /2 bambini/.test(label) ? 2 : (/1 bambino/.test(label) ? 1 : 0);
+    var parts=[]; while(adults--){parts.push('A');} while(kids--){parts.push('C');}
+    return parts.join(',') || 'A,A';
+  }
+  function fixDates(inEl,outEl){
+    var a=inEl&&inEl.value, b=outEl&&outEl.value;
+    if(!a){ a=new Date().toISOString().slice(0,10); }
+    if(!b || b<=a){ var d2=new Date(a); d2.setDate(d2.getDate()+1); b=d2.toISOString().slice(0,10); }
+    return {from:a,to:b};
+  }
+  function bookingUrl(inEl,outEl,gEl){
+    var dt=fixDates(inEl,outEl), rooms=guestsToRooms(gEl&&gEl.value);
+    return BOOK_BASE+'?portal='+encodeURIComponent(PORTAL)+'&lang='+LANG+
+           '&fromDate='+dt.from+'&toDate='+dt.to+'&sr=0&rooms='+rooms;
+  }
+  function flashNote(html){
     note.style.opacity=0;
-    setTimeout(function(){ note.innerHTML='<b>Demo</b> — qui si collegherà il motore di prenotazione già in uso dall\'hotel'; note.style.opacity=.9; },300);
-    clearTimeout(t); t=setTimeout(function(){ note.style.opacity=0; setTimeout(function(){note.innerHTML=noteHTML;note.style.opacity=.75;},300); },3800);
+    setTimeout(function(){ note.innerHTML=html; note.style.opacity=.95; },260);
+    clearTimeout(t); t=setTimeout(function(){ note.style.opacity=0; setTimeout(function(){note.innerHTML=noteHTML;note.style.opacity=.75;},300); },3200);
+  }
+  function openBooking(inEl,outEl,gEl){
+    var url=bookingUrl(inEl,outEl,gEl);
+    flashNote('Ti porto sul sito ufficiale — <b>piscina inclusa</b> ↗');
+    var w=window.open(url,'_blank','noopener'); if(!w){ location.href=url; }
   }
   function goTo(sel){ var el=document.querySelector(sel); if(!el) return; if(lenis){lenis.scrollTo(el,{offset:-72});} else {el.scrollIntoView({behavior:'smooth'});} }
-  document.getElementById('bookBtn').addEventListener('click', triggerNote);
+  document.getElementById('bookBtn').addEventListener('click', function(){
+    openBooking(document.getElementById('in'),document.getElementById('out'),document.getElementById('g'));
+  });
 
   // sticky compact booking bar
   var miniBook=document.getElementById('miniBook');
-  document.getElementById('miniBtn').addEventListener('click', function(){ goTo('#prenota'); setTimeout(triggerNote,650); });
+  document.getElementById('miniBtn').addEventListener('click', function(){
+    // su mobile i campi della mini-barra sono nascosti: porta alla barra grande a scegliere le date
+    if(innerWidth<=820){ goTo('#prenota'); }
+    else { openBooking(document.getElementById('min'),document.getElementById('mout'),document.getElementById('mg')); }
+  });
   var cardEl=document.querySelector('.booking-card'), footEl=document.querySelector('footer');
   var cardOut=false, footIn=false;
   function updMini(){ var s=cardOut && !footIn; miniBook.classList.toggle('show',s); miniBook.setAttribute('aria-hidden', s?'false':'true'); document.body.classList.toggle('mini-on', s); }
