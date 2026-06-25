@@ -713,20 +713,27 @@
     if(!b || b<=a){ var d2=new Date(a); d2.setDate(d2.getDate()+1); b=d2.toISOString().slice(0,10); }
     return {from:a,to:b};
   }
-  function bookingUrl(inEl,outEl,gEl){
-    var dt=fixDates(inEl,outEl), rooms=guestsToRooms(gEl&&gEl.value);
+  function buildBookingUrl(from,to,rooms){
     return BOOK_BASE+'?portal='+encodeURIComponent(PORTAL)+'&lang='+LANG+
-           '&fromDate='+dt.from+'&toDate='+dt.to+'&sr=0&rooms='+rooms;
+           '&fromDate='+from+'&toDate='+to+'&sr=0&rooms='+(rooms||'A,A');
+  }
+  function bookingUrl(inEl,outEl,gEl){
+    var dt=fixDates(inEl,outEl);
+    return buildBookingUrl(dt.from,dt.to,guestsToRooms(gEl&&gEl.value));
   }
   function flashNote(html){
     note.style.opacity=0;
     setTimeout(function(){ note.innerHTML=html; note.style.opacity=.95; },260);
     clearTimeout(t); t=setTimeout(function(){ note.style.opacity=0; setTimeout(function(){note.innerHTML=noteHTML;note.style.opacity=.75;},300); },3200);
   }
+  function openUrl(url){ var w=window.open(url,'_blank','noopener'); if(!w){ location.href=url; } }
   function openBooking(inEl,outEl,gEl){
-    var url=bookingUrl(inEl,outEl,gEl);
     flashNote('Ti porto sul sito ufficiale — <b>piscina inclusa</b> ↗');
-    var w=window.open(url,'_blank','noopener'); if(!w){ location.href=url; }
+    openUrl(bookingUrl(inEl,outEl,gEl));
+  }
+  function openBookingDates(from,to,rooms){
+    flashNote('Ti porto sul sito ufficiale — <b>piscina inclusa</b> ↗');
+    openUrl(buildBookingUrl(from,to,rooms));
   }
   function goTo(sel){ var el=document.querySelector(sel); if(!el) return; if(lenis){lenis.scrollTo(el,{offset:-72});} else {el.scrollIntoView({behavior:'smooth'});} }
   document.getElementById('bookBtn').addEventListener('click', function(){
@@ -823,18 +830,53 @@
   // ---------- CONCIERGE CHAT ----------
   var A={
     piscina:{t:"La nostra piscina è immersa nel parco, con vasche idromassaggio. Aperta dal 1° giugno al 15 settembre, tutti i giorni 9–19 🌞",c:[["È inclusa nel soggiorno?","piscina_inc"],["Vedi le camere","#camere"],["Scegli le date","#prenota"]]},
-    piscina_inc:{t:"Sì! La piscina è inclusa per chi prenota dal sito ufficiale — un motivo in più per prenotare diretto ✨",c:[["Scegli le date","#prenota"],["Le camere","camere"]]},
+    piscina_inc:{t:"Sì! La piscina è inclusa per chi prenota dal sito ufficiale — un motivo in più per prenotare diretto ✨",c:[["Prenota ora ↗","BOOK"],["Le camere","camere"]]},
     camere:{t:"Abbiamo tre tipologie: Doppia Superior con vista parco, Suite con idromassaggio e Family Room fino a 4 persone. Tutte affacciate sul verde.",c:[["Vedi le camere","#camere"],["Soluzioni famiglia","famiglie"],["Scegli le date","#prenota"]]},
     famiglie:{t:"La Family Room è pensata per chi viaggia coi bambini: spazio in più e a due passi dalla piscina 👨‍👩‍👧",c:[["Scegli le date","#prenota"],["La piscina","piscina"]]},
-    prezzi:{t:"Prenotando dal sito hai la miglior tariffa garantita: se trovi di meglio altrove, te lo scontiamo del 10%. E nessuna commissione.",c:[["Scegli le date","#prenota"],["La piscina","piscina"]]},
+    prezzi:{t:"Prenotando dal sito hai la miglior tariffa garantita: se trovi di meglio altrove, te lo scontiamo del 10%. E nessuna commissione.",c:[["Prenota ora ↗","BOOK"],["La piscina","piscina"]]},
     venezia:{t:"Sei a soli 15 minuti da Venezia: il bus per la città parte ogni 20 minuti dal centro di Mirano 🚌",c:[["Altri collegamenti","trasporti"],["Le camere","camere"]]},
     trasporti:{t:"Oltre al bus per Venezia, organizziamo transfer per gli aeroporti di Venezia e Treviso. E le biciclette per il Sile e la Riviera del Brenta sono gratuite 🚲",c:[["Scegli le date","#prenota"],["La piscina","piscina"]]},
     animali:{t:"Certo, gli amici a quattro zampe sono i benvenuti 🐾",c:[["Le camere","camere"],["La piscina","piscina"]]},
     matrimoni:{t:"Organizziamo matrimoni ed eventi nel parco della villa: spazi all'aperto ed eleganza d'altri tempi. Posso farti ricontattare per un preventivo.",c:[["Le camere","camere"],["Contatti","contatti"]]},
-    prenota:{t:"Perfetto! Scegli le date qui sotto e controllo subito le disponibilità per te 📅",c:[["Apri il calendario","#prenota"],["Prezzi e tariffe","prezzi"]]},
+    prenota:{t:"Volentieri! Dimmi le date (es. «dal 12 al 15 luglio») e controllo subito, oppure prenota direttamente 👇",c:[["Prenota ora ↗","BOOK"],["Apri il calendario","#prenota"],["Prezzi e tariffe","prezzi"]]},
     contatti:{t:"Siamo in Via Miranese 85, Mirano (VE).\n📞 +39 041 5700200\n✉️ info@villagiustinian.com",c:[["Scegli le date","#prenota"]]},
     fallback:{t:"Su questa nello specifico ti risponde meglio la reception (+39 041 5700200). Intanto posso aiutarti con:",c:[["La piscina","piscina"],["Le camere","camere"],["Disponibilità","prenota"]]}
   };
+  // ----- prenotazione dal chatbot: capisce le date e apre il motore ufficiale -----
+  var MESI={gennaio:1,gen:1,febbraio:2,feb:2,marzo:3,mar:3,aprile:4,apr:4,maggio:5,mag:5,giugno:6,giu:6,luglio:7,lug:7,agosto:8,ago:8,settembre:9,set:9,sett:9,ottobre:10,ott:10,novembre:11,nov:11,dicembre:12,dic:12};
+  function pad2(n){return ('0'+n).slice(-2);}
+  function isoOf(y,m,d){return y+'-'+pad2(m)+'-'+pad2(d);}
+  function yearFor(m,d,y){ var today=new Date(), yr=y||today.getFullYear();
+    if(!y){ var t0=new Date(today.getFullYear(),today.getMonth(),today.getDate()); if(new Date(yr,m-1,d)<t0) yr++; } return yr; }
+  function plusDays(iso,n){ var dt=new Date(iso); dt.setDate(dt.getDate()+n); return dt.toISOString().slice(0,10); }
+  function parseRange(text){ text=text.toLowerCase();
+    // a) date numeriche: 12/07, 12-07-2026, 12.7
+    var toks=text.match(/(\d{1,2})[\/\.\-](\d{1,2})(?:[\/\.\-](\d{2,4}))?/g);
+    if(toks && toks.length){
+      var pd=function(tk){ var p=tk.split(/[\/\.\-]/); var d=+p[0],m=+p[1],y=p[2]?(+p[2]<100?2000+(+p[2]):+p[2]):null; if(m>12&&d<=12){var x=d;d=m;m=x;} return isoOf(yearFor(m,d,y),m,d); };
+      var f=pd(toks[0]), tt=toks[1]?pd(toks[1]):plusDays(f,2); if(tt<=f)tt=plusDays(f,1); return {from:f,to:tt};
+    }
+    // b) "dal 12 al 15 (di) luglio (2026)"
+    var m1=text.match(/(\d{1,2})\s*(?:-|–|al|a|\/)\s*(\d{1,2})\s+(?:di\s+)?([a-zà]+)(?:\s+(\d{4}))?/);
+    if(m1 && MESI[m1[3]]){ var mo=MESI[m1[3]], d1=Math.min(+m1[1],+m1[2]), d2=Math.max(+m1[1],+m1[2]), yr=yearFor(mo,d1,m1[4]?+m1[4]:null);
+      var f2=isoOf(yr,mo,d1), t2=isoOf(yr,mo,d2); if(t2<=f2)t2=plusDays(f2,1); return {from:f2,to:t2}; }
+    // c) "il 12 luglio" singolo -> +2 notti
+    var m2=text.match(/(\d{1,2})\s+(?:di\s+)?([a-zà]+)(?:\s+(\d{4}))?/);
+    if(m2 && MESI[m2[2]]){ var mo3=MESI[m2[2]], yr3=yearFor(mo3,+m2[1],m2[3]?+m2[3]:null); var f3=isoOf(yr3,mo3,+m2[1]); return {from:f3,to:plusDays(f3,2)}; }
+    return null;
+  }
+  function roomsFromText(t){ t=(t||'').toLowerCase();
+    var ad=(/\b(1|un|una)\s+adult/.test(t) && !/\b2\s+adult/.test(t))?1:2;
+    var kids=/\b2\s+bambin/.test(t)?2:((/\b(1|un)\s+bambin/.test(t))?1:0);
+    var p=[]; while(ad-->0)p.push('A'); while(kids-->0)p.push('C'); return p.join(',')||'A,A';
+  }
+  function dmy(iso){ var p=iso.split('-'); return p[2]+'/'+p[1]; }
+  function answerBooking(from,to,rooms){
+    typing(function(){
+      addBot('Ottima scelta! Per il '+dmy(from)+' → '+dmy(to)+' abbiamo disponibilità ✨ Prenotando da qui la piscina è inclusa e hai la miglior tariffa garantita.');
+      addChips([['Prenota ora ↗','book:'+from+':'+to+':'+rooms],['Cambia date','#prenota'],['Prezzi e tariffe','prezzi']]);
+    });
+  }
   function matchIntent(x){ x=x.toLowerCase();
     if(/piscin|nuot|bagno/.test(x)) return 'piscina';
     if(/inclus|grat/.test(x)) return 'piscina_inc';
@@ -845,7 +887,7 @@
     if(/bus|tren|aeroport|transfer|arriv|raggiung|bici/.test(x)) return 'trasporti';
     if(/anima|cane|gatt|\bpet\b/.test(x)) return 'animali';
     if(/matrimon|event|cerimon|festa/.test(x)) return 'matrimoni';
-    if(/prenot|disponib|\bdate\b|calendar/.test(x)) return 'prenota';
+    if(/prenot|disponib|liber|soggiorn|\bnott|\bdate\b|calendar/.test(x)) return 'prenota';
     if(/contatt|telefon|email|mail|indirizz/.test(x)) return 'contatti';
     return 'fallback';
   }
@@ -860,8 +902,17 @@
   function clearChips(){ cbody.querySelectorAll('.chips').forEach(function(x){x.remove();}); }
   function typing(cb){ var tp=mk('typing','<i></i><i></i><i></i>'); cbody.appendChild(tp); sb(); setTimeout(function(){ tp.remove(); cb(); }, 650+Math.random()*350); }
   function answer(k){ var a=A[k]||A.fallback; typing(function(){ addBot(a.t); addChips(a.c); }); }
-  function chip(label,k){ clearChips(); addUser(label); if(k.charAt(0)==='#'){ typing(function(){ addBot('Ti porto subito lì 👇'); }); goTo(k); } else { answer(k); } }
-  function send(){ var v=textIn.value.trim(); if(!v)return; clearChips(); addUser(v); textIn.value=''; answer(matchIntent(v)); }
+  function chip(label,k){ clearChips(); addUser(label);
+    // apertura motore SINCRONA (dentro il click) per non far bloccare il popup
+    if(k==='BOOK'){ addBot('Perfetto, ti porto al calendario ufficiale 👇'); openBooking(document.getElementById('in'),document.getElementById('out'),document.getElementById('g')); return; }
+    if(k.indexOf('book:')===0){ var p=k.split(':'); addBot('Perfetto, ti porto al calendario ufficiale 👇'); openBookingDates(p[1],p[2],p[3]||'A,A'); return; }
+    if(k.charAt(0)==='#'){ typing(function(){ addBot('Ti porto subito lì 👇'); }); goTo(k); } else { answer(k); }
+  }
+  function send(){ var v=textIn.value.trim(); if(!v)return; clearChips(); addUser(v); textIn.value='';
+    var rng=parseRange(v);
+    if(rng){ answerBooking(rng.from,rng.to,roomsFromText(v)); return; }
+    answer(matchIntent(v));
+  }
   sendBtn.addEventListener('click',send);
   textIn.addEventListener('keydown',function(e){ if(e.key==='Enter') send(); });
   function openChat(){ panel.classList.add('open'); panel.setAttribute('aria-hidden','false'); teaser.classList.remove('show'); var bg=fab.querySelector('.badge'); if(bg)bg.style.display='none';
