@@ -97,11 +97,11 @@
   .villa-strip .vs-item:hover img{transform:scale(1.05)}
   @media(max-width:700px){.villa-strip{grid-template-columns:1fr 1fr;gap:2px}}
   .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,38,30,.55) 0%,rgba(22,38,30,.18) 30%,rgba(22,38,30,.5) 62%,rgba(22,38,30,.88) 100%)}
-  .hero-inner{position:relative;z-index:2;width:100%;padding-bottom:clamp(200px,32vh,330px);will-change:transform,opacity}
-  .hero h1{color:var(--paper);max-width:14ch;margin:.35em 0 .4em;text-shadow:var(--tshadow)}
+  .hero-inner{position:relative;z-index:2;width:100%;padding-bottom:clamp(200px,32vh,330px);will-change:transform,opacity;text-align:center}
+  .hero h1{color:var(--paper);max-width:700px;margin:.35em auto .4em;text-shadow:var(--tshadow)}
   .hero .eyebrow{color:#EAD2A0;font-size:.78rem;letter-spacing:.24em;background:rgba(16,30,24,.42);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);padding:9px 18px;border-radius:30px;border:1px solid rgba(203,168,104,.34);text-shadow:0 1px 4px rgba(0,0,0,.55)}
   .hero .eyebrow::before{background:var(--brass-lite);box-shadow:0 1px 3px rgba(22,38,30,.5)}
-  .hero p{color:rgba(244,239,230,.92);max-width:46ch;font-size:1.05rem;text-shadow:0 1px 4px rgba(22,38,30,.55)}
+  .hero p{color:rgba(244,239,230,.92);max-width:46ch;margin-left:auto;margin-right:auto;font-size:1.05rem;text-shadow:0 1px 4px rgba(22,38,30,.55)}
   .scroll-cue{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:3;color:rgba(244,239,230,.8);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;text-shadow:var(--tshadow-soft)}
   .scroll-cue .line{width:1px;height:38px;background:rgba(244,239,230,.5);position:relative;overflow:hidden}
   .scroll-cue .line::after{content:"";position:absolute;top:-38px;left:0;width:1px;height:38px;background:var(--brass-lite);animation:cue 2.2s ease-in-out infinite}
@@ -144,6 +144,12 @@
   section.block{padding:clamp(70px,9vw,128px) 0}
   .center{text-align:center}
   .mt-s{margin-top:14px}.mt-m{margin-top:26px}
+  /* intestazione di sezione, pulita e centrata (stile editoriale) */
+  .sec-head{max-width:760px;margin:0 auto clamp(44px,5vw,64px)}
+  .sec-head h2{margin-top:14px}
+  .sec-sub{max-width:56ch;margin:16px auto 0;color:rgba(34,39,31,.72);font-size:1.02rem}
+  .sec-cta{display:flex;justify-content:center;margin-top:clamp(40px,5vw,56px)}
+  .sec-head + .rooms,.sec-head + .agenda,.sec-head + .geo{margin-top:0}
 
   /* story */
   .story{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,90px);align-items:center}
@@ -152,11 +158,13 @@
   .story-figure .tag{position:absolute;left:0;bottom:26px;z-index:2;background:var(--brass);color:#fff;padding:10px 20px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
   .story h2{margin:.3em 0}
   .story p+p{margin-top:1.1em}
+  .story-text{text-align:center}
   .rule{width:48px;height:1px;background:var(--brass);margin:26px 0}
+  .story-text .rule,.wed-text .rule{margin-left:auto;margin-right:auto}
 
   /* pillars */
   .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-  .pillar{background:var(--paper);padding:38px 28px;transition:background .3s}
+  .pillar{background:var(--paper);padding:38px 28px;transition:background .3s;text-align:center}
   .pillar:hover{background:var(--paper-2)}
   .pillar .num{font-family:var(--display);font-size:1rem;color:var(--brass);letter-spacing:.1em}
   .pillar h3{font-size:1.5rem;margin:14px 0 8px}
@@ -190,13 +198,13 @@
   .feature{position:relative;height:175vh;background:var(--park-deep)}
   .feature-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;color:var(--paper)}
   .feature-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.4;transform:scale(1.05);will-change:transform}
-  .feature-sticky::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--park-deep) 6%,rgba(22,38,30,.35) 100%)}
-  .feature-content{position:relative;z-index:2;width:100%;will-change:transform;text-shadow:var(--tshadow-soft)}
+  .feature-sticky::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,38,30,.5),rgba(22,38,30,.38) 45%,rgba(22,38,30,.5))}
+  .feature-content{position:relative;z-index:2;width:100%;will-change:transform;text-shadow:var(--tshadow-soft);text-align:center}
   .feature .eyebrow{color:var(--brass-lite)}
   .feature .eyebrow::before{background:var(--brass-lite)}
-  .feature h2{color:var(--paper);max-width:16ch;margin:.3em 0}
-  .feature p{max-width:44ch;color:rgba(244,239,230,.82)}
-  .feature-info{display:flex;gap:48px;margin-top:40px;flex-wrap:wrap}
+  .feature h2{color:var(--paper);max-width:22ch;margin:.3em auto}
+  .feature p{max-width:44ch;margin-left:auto;margin-right:auto;color:rgba(244,239,230,.82)}
+  .feature-info{display:flex;gap:48px;margin-top:40px;flex-wrap:wrap;justify-content:center}
   .feature-info .k{font-family:var(--display);font-size:2rem;color:var(--brass-lite);display:block}
   .feature-info .l{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-top:4px;display:block}
 
@@ -212,7 +220,7 @@
 
   /* weddings */
   .wed{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
-  .wed-text{background:var(--paper-2);display:flex;align-items:center;padding:clamp(40px,6vw,90px)}
+  .wed-text{background:var(--paper-2);display:flex;align-items:center;padding:clamp(40px,6vw,90px);text-align:center}
   .wed-img{background:linear-gradient(135deg,var(--park),var(--park-deep));position:relative;overflow:hidden}
   .wed-img img{width:100%;height:100%;object-fit:cover;will-change:transform}
 
@@ -298,9 +306,10 @@
   .leaflet-control-attribution svg,.leaflet-attribution-flag{display:none!important}
   .geo-lists{display:grid;gap:34px}
   .geo-block h3{font-size:1.5rem;margin-bottom:6px}
-  .geo-block .sub{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:.6em}
+  .geo-block{text-align:center}
+  .geo-block .sub{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);font-weight:600;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:.6em}
   .geo-block .sub::before{content:"";width:22px;height:1px;background:var(--brass);opacity:.7}
-  .times{list-style:none}
+  .times{list-style:none;text-align:left}
   .times li{display:flex;justify-content:space-between;align-items:baseline;gap:18px;padding:11px 0;border-bottom:1px solid var(--line)}
   .times li:last-child{border-bottom:0}
   .times .dest{font-family:var(--display);font-size:1.18rem;color:var(--ink);line-height:1.1}
@@ -333,7 +342,7 @@
   .rating-line b{font-family:var(--display);font-size:1.35rem;color:var(--brass)}
   .rating-line .ph{font-size:.66rem;color:rgba(34,39,31,.45);letter-spacing:.05em}
   .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:46px}
-  .review{background:var(--paper);border:1px solid var(--line);padding:32px 28px;display:flex;flex-direction:column;margin:0}
+  .review{background:var(--paper);border:1px solid var(--line);padding:32px 28px;display:flex;flex-direction:column;margin:0;text-align:center}
   .review .stars{color:var(--brass);letter-spacing:4px;font-size:1rem;margin-bottom:16px}
   .review blockquote{font-family:var(--display);font-style:italic;font-size:1.25rem;line-height:1.5;color:var(--park);margin:0}
   .review .who{margin-top:auto;padding-top:20px}
@@ -435,9 +444,9 @@
     <img class="hero-img" id="heroImg" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-10.jpeg" alt="Park Hotel Villa Giustinian immerso nel parco" onerror="this.style.display='none'">
   </div>
   <div class="wrap hero-inner" id="heroInner">
-    <span class="eyebrow">Residenza storica · cuore del Veneto</span>
-    <h1 class="display">Un parco intorno, Venezia a un passo.</h1>
-    <p>Una dimora ottocentesca rinnovata, immersa nel verde con piscina e vasche idromassaggio. Il punto di partenza ideale per Venezia, la Riviera del Brenta e le città d'arte del Veneto.</p>
+    <span class="eyebrow">Park Hotel · Mirano, Venezia</span>
+    <h1 class="display">Un parco e una piscina,<br>a 15 minuti da Venezia.</h1>
+    <p>Dimora storica rinnovata, immersa nel verde. La base ideale per visitare Venezia, la Riviera del Brenta e le città d'arte del Veneto.</p>
   </div>
   <div class="scroll-cue">Scorri<div class="line"></div></div>
 </section>
@@ -469,13 +478,12 @@
       <img data-par="0.05" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/villa-notturna.jpg" alt="La Villa Giustinian di sera" onerror="this.style.display='none'">
       <span class="tag">Mirano · Riviera del Brenta</span>
     </div>
-    <div class="reveal">
-      <span class="eyebrow">La nostra storia</span>
-      <h2>Una villa veneta<br>che vive ancora.</h2>
+    <div class="reveal story-text">
+      <span class="eyebrow">La villa</span>
+      <h2>Una dimora storica,<br>oggi rinnovata.</h2>
       <div class="rule"></div>
-      <p>Villa Giustinian custodisce l'eleganza tranquilla delle dimore di campagna venete: soffitti alti, luce che filtra dal parco, e un silenzio raro a così pochi minuti dalla laguna.</p>
-      <p>Recentemente rinnovata, oggi è un hotel intimo dove il fascino dell'antico incontra la comodità di chi viaggia oggi — biciclette sempre a disposizione, transfer per gli aeroporti di Venezia e Treviso, e un parco tutto da vivere.</p>
-      <p class="lead mt-m">«Dormi nel verde, ti svegli a quindici minuti da San Marco.»</p>
+      <p>Villa Giustinian è una dimora veneta di campagna: soffitti alti, luce che filtra dal parco e tranquillità, a pochi minuti dalla laguna.</p>
+      <p>Oggi è un hotel rinnovato e accogliente, con piscina, biciclette a disposizione e transfer per gli aeroporti di Venezia e Treviso. Il comfort di oggi nella cornice di ieri.</p>
     </div>
   </div>
 </section>
@@ -493,9 +501,10 @@
 
 <section class="block" id="camere" style="background:var(--paper-2)">
   <div class="wrap">
-    <div class="rooms-head reveal">
-      <div><span class="eyebrow">Le camere</span><h2 class="mt-s">Riposo, con vista sul verde.</h2></div>
-      <a href="#prenota" class="room-link">Verifica le date</a>
+    <div class="sec-head center reveal">
+      <span class="eyebrow center">Le camere</span>
+      <h2>Le nostre camere</h2>
+      <p class="sec-sub">Tre tipologie, tutte affacciate sul parco e con colazione inclusa. Prenotando dal sito ufficiale la piscina è inclusa.</p>
     </div>
     <!-- PREZZI "da €" PLACEHOLDER: sostituire con le tariffe reali dell'hotel -->
     <div class="rooms">
@@ -539,6 +548,7 @@
         </div>
       </article>
     </div>
+    <div class="sec-cta reveal"><a href="#prenota" class="btn">Verifica disponibilità</a></div>
   </div>
 </section>
 
@@ -546,9 +556,9 @@
   <div class="feature-sticky">
     <img class="feature-img" id="featureImg" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-22.jpeg" alt="La piscina nel parco" onerror="this.style.display='none'">
     <div class="wrap feature-content" id="featureContent">
-      <span class="eyebrow">Piscina &amp; Sporting Club</span>
-      <h2>L'estate, all'ombra del parco.</h2>
-      <p>Una piscina esterna nel verde, vasche idromassaggio e lo spazio per rallentare. Dal 1° giugno al 15 settembre, ogni giorno dalle 9 alle 19.</p>
+      <span class="eyebrow">Piscina &amp; parco</span>
+      <h2>Piscina nel parco,<br>inclusa per chi prenota qui.</h2>
+      <p>Piscina esterna immersa nel verde e vasche idromassaggio. Aperta dal 1° giugno al 15 settembre, tutti i giorni dalle 9 alle 19.</p>
       <div class="feature-info">
         <div><span class="k">1 Giu — 15 Set</span><span class="l">Stagione aperta</span></div>
         <div><span class="k">9 — 19</span><span class="l">Tutti i giorni</span></div>
@@ -560,7 +570,11 @@
 
 <section class="block" id="mappa" style="background:var(--paper-2)">
   <div class="wrap">
-    <div class="center reveal"><span class="eyebrow center">I dintorni</span><h2 class="mt-s">Quindici minuti da Venezia,<br>il Veneto tutto intorno.</h2></div>
+    <div class="sec-head center reveal">
+      <span class="eyebrow center">Dove siamo</span>
+      <h2>A 15 minuti da Venezia</h2>
+      <p class="sec-sub">A Mirano, al centro del Veneto: Venezia, le città d'arte e gli aeroporti a pochi minuti.</p>
+    </div>
     <div class="geo">
       <div class="geo-map reveal">
         <!-- mappa vera interattiva (Leaflet); se non carica resta la mappetina SVG sotto -->
@@ -639,9 +653,9 @@
   <div class="wed-text reveal">
     <div>
       <span class="eyebrow">Matrimoni &amp; eventi</span>
-      <h2 class="mt-s">Il vostro giorno,<br>nel parco di una villa.</h2>
+      <h2 class="mt-s">Matrimoni ed eventi<br>nel parco della villa.</h2>
       <div class="rule"></div>
-      <p>Ricevimenti, feste e cerimonie nella cornice di una dimora storica circondata dal verde. Spazi all'aperto, eleganza d'altri tempi e un'organizzazione che pensa a tutto.</p>
+      <p>Ricevimenti, feste e cerimonie in una dimora storica circondata dal verde: spazi all'aperto, sale eleganti e un'organizzazione che pensa a tutto.</p>
       <a href="#prenota" class="btn" style="margin-top:28px">Richiedi un preventivo</a>
     </div>
   </div>
@@ -650,9 +664,10 @@
 
 <section class="block" id="eventi">
   <div class="wrap">
-    <div class="rooms-head reveal">
-      <div><span class="eyebrow">Stagioni &amp; eventi</span><h2 class="mt-s">C'è sempre un motivo<br>per scegliere le date.</h2></div>
-      <a href="#prenota" class="room-link">Verifica disponibilità</a>
+    <div class="sec-head center reveal">
+      <span class="eyebrow center">Quando venire</span>
+      <h2>Stagioni ed eventi</h2>
+      <p class="sec-sub">Dalla stagione in piscina ai grandi appuntamenti veneziani: scegli il periodo e prenota dal sito.</p>
     </div>
     <div class="agenda reveal">
       <div class="agenda-row feat">
@@ -676,16 +691,6 @@
         <a href="#prenota" class="agenda-cta">Trova le date</a>
       </div>
       <div class="agenda-row">
-        <div class="agenda-when">Settembre<small>Prima domenica</small></div>
-        <div class="agenda-main"><h3>Regata Storica</h3><p>Il corteo di imbarcazioni d'epoca sul Canal Grande: storia, colori e sfide di voga.</p></div>
-        <a href="#prenota" class="agenda-cta">Trova le date</a>
-      </div>
-      <div class="agenda-row">
-        <div class="agenda-when">Ottobre<small>Venicemarathon</small></div>
-        <div class="agenda-main"><h3>Venice Marathon</h3><p>Da Stra a Venezia lungo la Riviera del Brenta: 42 km che passano a pochi minuti da noi. Base ideale per atleti e accompagnatori.</p></div>
-        <a href="#prenota" class="agenda-cta">Trova le date</a>
-      </div>
-      <div class="agenda-row">
         <div class="agenda-when">Tutto l'anno<small>Su misura</small></div>
         <div class="agenda-main"><h3>Matrimoni &amp; ricevimenti</h3><p>Il vostro giorno nel parco di una villa veneta: spazi all'aperto, eleganza d'altri tempi e un'organizzazione che pensa a tutto.</p></div>
         <a href="#matrimoni" class="agenda-cta">Scopri di più</a>
@@ -699,8 +704,8 @@
 <section class="block reviews" id="recensioni" style="background:var(--paper-2)">
   <div class="wrap">
     <div class="center reveal">
-      <span class="eyebrow center">Le voci dei nostri ospiti</span>
-      <h2 class="mt-s">Chi sceglie la villa, torna.</h2>
+      <span class="eyebrow center">Recensioni</span>
+      <h2 class="mt-s">Cosa dicono gli ospiti</h2>
       <p class="rating-line mt-s"><b>4,8 / 5</b> · media su Google, Booking e TripAdvisor <span class="ph">(dati placeholder)</span></p>
     </div>
     <div class="reviews-grid">
@@ -726,9 +731,9 @@
 <section class="direct">
   <div class="reveal">
     <span class="eyebrow center" style="color:rgba(255,255,255,.85)">Prenota diretto</span>
-    <h2>Il prezzo migliore è sempre qui.</h2>
-    <p>Prenotando dal sito ufficiale hai la piscina inclusa, nessuna commissione e la miglior tariffa garantita: trovi di meglio? Te lo scontiamo del 10%.</p>
-    <a href="#prenota" class="btn">Verifica le date</a>
+    <h2>Conviene prenotare dal sito ufficiale.</h2>
+    <p>Piscina inclusa, nessuna commissione e miglior tariffa garantita: se trovi di meglio altrove, te lo scontiamo del 10%.</p>
+    <a href="#prenota" class="btn">Verifica disponibilità</a>
   </div>
 </section>
 
