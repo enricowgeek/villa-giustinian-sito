@@ -177,6 +177,14 @@
   .room-link{margin-top:18px;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);display:inline-flex;gap:8px;align-items:center}
   .room-link::after{content:"→";color:var(--brass);transition:transform .3s}
   .room:hover .room-link::after{transform:translateX(5px)}
+  .room-amen{list-style:none;display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 0}
+  .room-amen li{font-size:.7rem;letter-spacing:.03em;color:var(--park);background:var(--paper-2);border:1px solid var(--line);padding:4px 10px;border-radius:20px}
+  .room-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-top:20px}
+  .room-price{line-height:1.05}
+  .room-price .from{font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--brass);font-weight:700;display:block;margin-bottom:2px}
+  .room-price b{font-family:var(--display);font-size:1.7rem;color:var(--ink);font-weight:600}
+  .room-price .per{font-size:.76rem;color:rgba(34,39,31,.6)}
+  .room-book{padding:11px 22px;font-size:.82rem;border-radius:2px;white-space:nowrap}
 
   /* pinned pool feature */
   .feature{position:relative;height:175vh;background:var(--park-deep)}
@@ -487,20 +495,48 @@
   <div class="wrap">
     <div class="rooms-head reveal">
       <div><span class="eyebrow">Le camere</span><h2 class="mt-s">Riposo, con vista sul verde.</h2></div>
-      <a href="#" class="room-link">Tutte le camere</a>
+      <a href="#prenota" class="room-link">Verifica le date</a>
     </div>
+    <!-- PREZZI "da €" PLACEHOLDER: sostituire con le tariffe reali dell'hotel -->
     <div class="rooms">
       <article class="room reveal">
-        <div class="room-img"><img src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-22.jpeg" alt="Camera Doppia Superior" onerror="this.style.display='none'"></div>
-        <div class="room-body"><h3>Doppia Superior</h3><div class="room-meta"><span>Vista parco</span><span>fino a 2</span></div><p>La più richiesta: spaziosa, luminosa e affacciata sul parco. Il risveglio migliore prima di Venezia.</p><span class="room-link">Scopri</span></div>
+        <div class="room-img"><img loading="lazy" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-22.jpeg" alt="Camera Doppia Superior" onerror="this.style.display='none'"></div>
+        <div class="room-body">
+          <h3>Doppia Superior</h3>
+          <div class="room-meta"><span>Vista parco</span><span>fino a 2</span></div>
+          <p>La più richiesta: spaziosa, luminosa e affacciata sul parco. Il risveglio migliore prima di Venezia.</p>
+          <ul class="room-amen"><li>Vista parco</li><li>Colazione inclusa</li><li>Wi-Fi</li><li>Aria condizionata</li></ul>
+          <div class="room-foot">
+            <div class="room-price"><span class="from">da</span><b>€119</b> <span class="per">/ notte</span></div>
+            <button class="btn room-book" data-rooms="A,A">Prenota</button>
+          </div>
+        </div>
       </article>
       <article class="room reveal">
-        <div class="room-img"></div>
-        <div class="room-body"><h3>Suite</h3><div class="room-meta"><span>Idromassaggio</span><span>fino a 3</span></div><p>Per chi cerca qualcosa in più: ambienti ampi, dettagli curati e l'atmosfera della dimora storica.</p><span class="room-link">Scopri</span></div>
+        <div class="room-img"><img loading="lazy" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-10.jpeg" alt="Suite con idromassaggio" onerror="this.style.display='none'"></div>
+        <div class="room-body">
+          <h3>Suite</h3>
+          <div class="room-meta"><span>Idromassaggio</span><span>fino a 3</span></div>
+          <p>Per chi cerca qualcosa in più: ambienti ampi, dettagli curati e l'atmosfera della dimora storica.</p>
+          <ul class="room-amen"><li>Idromassaggio</li><li>Colazione inclusa</li><li>Wi-Fi</li><li>Salotto</li></ul>
+          <div class="room-foot">
+            <div class="room-price"><span class="from">da</span><b>€169</b> <span class="per">/ notte</span></div>
+            <button class="btn room-book" data-rooms="A,A">Prenota</button>
+          </div>
+        </div>
       </article>
       <article class="room reveal">
-        <div class="room-img"></div>
-        <div class="room-body"><h3>Family Room</h3><div class="room-meta"><span>Per famiglie</span><span>fino a 4</span></div><p>Lo spazio giusto per i più piccoli, a due passi dalla piscina. Pensata per chi viaggia coi bambini.</p><span class="room-link">Scopri</span></div>
+        <div class="room-img"><img loading="lazy" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/villa-notturna.jpg" alt="Family Room" onerror="this.style.display='none'"></div>
+        <div class="room-body">
+          <h3>Family Room</h3>
+          <div class="room-meta"><span>Per famiglie</span><span>fino a 4</span></div>
+          <p>Lo spazio giusto per i più piccoli, a due passi dalla piscina. Pensata per chi viaggia coi bambini.</p>
+          <ul class="room-amen"><li>Fino a 4 persone</li><li>Colazione inclusa</li><li>Wi-Fi</li><li>Vicino piscina</li></ul>
+          <div class="room-foot">
+            <div class="room-price"><span class="from">da</span><b>€189</b> <span class="per">/ notte</span></div>
+            <button class="btn room-book" data-rooms="A,A,C,C">Prenota</button>
+          </div>
+        </div>
       </article>
     </div>
   </div>
@@ -848,6 +884,13 @@
     // su mobile i campi della mini-barra sono nascosti: porta alla barra grande a scegliere le date
     if(innerWidth<=820){ goTo('#prenota'); }
     else { openBooking(document.getElementById('min'),document.getElementById('mout'),document.getElementById('mg')); }
+  });
+  // "Prenota" per singola camera: apre il motore con le date correnti e l'occupazione della camera
+  [].slice.call(document.querySelectorAll('.room-book')).forEach(function(b){
+    b.addEventListener('click',function(){
+      var dt=fixDates(document.getElementById('in'),document.getElementById('out'));
+      openBookingDates(dt.from,dt.to,b.getAttribute('data-rooms')||'A,A');
+    });
   });
   var cardEl=document.querySelector('.booking-card'), footEl=document.querySelector('footer');
   var cardOut=false, footIn=false;
