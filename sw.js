@@ -1,5 +1,5 @@
 /* Park Hotel Villa Giustinian — service worker (demo) */
-const CACHE = 'villagiustinian-v7';
+const CACHE = 'villagiustinian-v8';
 const ASSETS = [
   './',
   './index.html',
