@@ -46,9 +46,6 @@
   h2{font-size:clamp(1.5rem,2.8vw,2.2rem)}
   .lead{font-family:var(--display-it);font-size:clamp(1.2rem,2vw,1.55rem);font-style:italic;color:var(--park);line-height:1.45}
 
-  .ribbon{background:var(--park-deep);color:var(--paper);font-size:.78rem;letter-spacing:.06em;text-align:center;padding:9px 16px}
-  .ribbon b{color:var(--brass-lite);font-weight:600}
-  .ribbon span{opacity:.55;margin:0 .7em}
 
   header{position:sticky;top:0;z-index:60;background:transparent;transition:background .4s,box-shadow .4s,padding .4s;padding:22px 0}
   header.solid{background:rgba(244,239,230,.96);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--line);padding:14px 0}
@@ -418,7 +415,6 @@
   @media(max-width:560px){
     .booking-card{grid-template-columns:1fr}
     .field{border-right:0;border-bottom:1px solid var(--line)}
-    .ribbon span{display:none}
   }
   /* ===== RESTYLE STORYTELLING ===== */
   /* hero: scritta grande "vivi la villa" + triade */
@@ -620,6 +616,11 @@
   .ig-cell:hover::after{background:rgba(16,30,24,.34)}
   .ig-cell .ig-ic{position:absolute;z-index:3;width:30px;height:30px;color:#fff;opacity:0;transform:scale(.82);transition:opacity .35s,transform .35s}
   .ig-cell:hover .ig-ic{opacity:1;transform:none}
+  /* post reali via embed ufficiale IG (attivi quando IG_POSTS ha i codici) */
+  .ig-grid.embeds{grid-template-columns:repeat(3,1fr);align-items:start}
+  .ig-embed{position:relative;border-radius:8px;overflow:hidden;background:#fff;border:1px solid var(--line);height:520px}
+  .ig-embed iframe{width:100%;height:100%;border:0;display:block}
+  @media(max-width:860px){.ig-grid.embeds{grid-template-columns:1fr}.ig-embed{height:560px}}
   @media(max-width:600px){.ig-grid{gap:8px}}
 
   @media(max-width:900px){
@@ -643,10 +644,6 @@
 </style>
 </head>
 <body>
-
-<div class="ribbon">
-  <b>Piscina gratuita</b> prenotando dal sito ufficiale <span>•</span> <b>Miglior tariffa garantita</b> <span>•</span> 15 minuti da Venezia
-</div>
 
 <header id="header">
   <div class="wrap nav">
@@ -752,7 +749,7 @@
         <span class="ex-nm">La piscina</span><span class="ex-go" aria-hidden="true">⤢</span>
       </button>
       <button type="button" class="tile wide img" aria-label="Il parco secolare">
-        <video class="tile-vid" autoplay muted loop playsinline preload="none" onerror="this.remove()"><!-- VIDEO LOOP parco · 5s muto: scommenta col file --><!-- <source src="assets/parco-loop.mp4" type="video/mp4"> --></video>
+        <video class="tile-vid" autoplay muted loop playsinline preload="auto" onerror="this.remove()"><!-- STOCK temporaneo (Mixkit · free, no attribution) — sostituire con la clip reale assets/parco-loop.mp4 --><source src="https://assets.mixkit.co/videos/40647/40647-720.mp4" type="video/mp4"></video>
         <img loading="lazy" src="https://images.pexels.com/photos/32493154/pexels-photo-32493154.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" alt="Il parco secolare della villa" onerror="this.parentNode.classList.remove('img')">
         <span class="ex-nm">Il parco secolare</span><span class="ex-go" aria-hidden="true">⤢</span>
       </button>
@@ -762,11 +759,11 @@
         <span class="ex-nm">Biciclette incluse</span><span class="ex-go" aria-hidden="true">⤢</span>
       </button>
       <button type="button" class="tile img" aria-label="Amici a 4 zampe">
-        <img loading="lazy" src="https://images.pexels.com/photos/17802175/pexels-photo-17802175.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Due barboncini — amici a 4 zampe benvenuti" onerror="this.parentNode.classList.remove('img')">
+        <img loading="lazy" src="https://images.pexels.com/photos/17802175/pexels-photo-17802175.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Due barboncini — amici a 4 zampe benvenuti" onerror="this.parentNode.classList.remove('img')"><video class="tile-vid" autoplay muted loop playsinline preload="auto" onerror="this.remove()"><!-- STOCK temporaneo (Mixkit · free, no attribution) — sostituire con la clip reale assets/cani-loop.mp4 --><source src="https://assets.mixkit.co/videos/1210/1210-720.mp4" type="video/mp4"></video>
         <span class="ex-nm">Amici a 4 zampe</span><span class="ex-go" aria-hidden="true">⤢</span>
       </button>
       <a class="tile wide img tile-link" href="#mappa" aria-label="Vai alla mappa dei dintorni">
-        <img loading="lazy" src="https://images.pexels.com/photos/18781088/pexels-photo-18781088.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" alt="Venezia a 15 minuti" onerror="this.parentNode.classList.remove('img')">
+        <img loading="lazy" src="https://images.pexels.com/photos/18781088/pexels-photo-18781088.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" alt="Venezia a 15 minuti" onerror="this.parentNode.classList.remove('img')"><video class="tile-vid" autoplay muted loop playsinline preload="auto" onerror="this.remove()"><!-- STOCK temporaneo (Mixkit · free, no attribution) — sostituire con la clip reale assets/venezia-loop.mp4 --><source src="https://assets.mixkit.co/videos/11131/11131-720.mp4" type="video/mp4"></video>
         <span class="ex-nm">A 15 minuti da Venezia</span><span class="ex-go" aria-hidden="true">→</span>
       </a>
       <a class="tile wide ph ph-deep tile-link" href="#eventi" aria-label="Vai agli eventi">
@@ -911,6 +908,28 @@
     <div class="sec-cta reveal"><a href="https://www.instagram.com/parkhotel.villagiustinian/" target="_blank" rel="noopener" class="btn">Seguici su Instagram</a></div>
   </div>
 </section>
+<script>
+/* POST INSTAGRAM REALI — incolla qui i codici degli ultimi 3 post e appaiono da soli.
+   Il codice è la parte finale del link del post:
+   https://www.instagram.com/p/DAgoMdtAiyh/  ->  'DAgoMdtAiyh'
+   (per i reel vale lo stesso: /reel/CODICE/). Lascia [] per tenere le foto di anteprima. */
+var IG_POSTS = [];
+(function(){
+  if(!IG_POSTS.length) return;                       // nessun codice → resta la griglia foto
+  var grid=document.querySelector('#instagram .ig-grid');
+  if(!grid) return;
+  grid.innerHTML='';
+  grid.classList.add('embeds');
+  IG_POSTS.slice(0,3).forEach(function(code){
+    var box=document.createElement('div'); box.className='ig-embed';
+    var f=document.createElement('iframe');
+    f.src='https://www.instagram.com/p/'+encodeURIComponent(code)+'/embed';
+    f.loading='lazy'; f.scrolling='no'; f.setAttribute('allowtransparency','true');
+    f.title='Post Instagram di Villa Giustinian';
+    box.appendChild(f); grid.appendChild(box);
+  });
+})();
+</script>
 
 <section class="closing" id="contatti">
   <div class="reveal">
