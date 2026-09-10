@@ -519,7 +519,9 @@
   .rm-occ{margin-top:10px;font-size:.86rem;color:var(--park)}
   .rm-occ b{font-weight:600}
   .rm-cta{width:100%;margin-top:14px;padding:15px 16px;border-radius:8px;font-size:.98rem;letter-spacing:.03em}
-  .rm-trust{margin-top:12px;font-size:.74rem;color:var(--park);text-align:center;line-height:1.55}
+  .rm-next{margin-top:9px;font-size:.7rem;line-height:1.5;color:var(--soft);text-align:center}
+  .rm-next b{color:var(--park);font-weight:600}
+  .rm-trust{margin-top:10px;font-size:.74rem;color:var(--park);text-align:center;line-height:1.55}
   .rm-trust b{color:var(--brass);font-weight:600}
   .rm-bottom{margin-top:clamp(20px,2.4vw,30px);border-top:1px solid var(--line);padding-top:clamp(18px,2.2vw,26px)}
   .rm-desc{font-size:1rem;color:rgba(34,39,31,.82);max-width:74ch}
@@ -1001,7 +1003,8 @@ var IG_POSTS = [];
           <label>Partenza<input type="date" id="rmOut"></label>
         </div>
         <div class="rm-occ" id="rmOcc">Occupazione: <b>2 ospiti</b></div>
-        <button class="btn rm-cta" id="rmBook">Prenota e vai al pagamento →</button>
+        <button class="btn rm-cta" id="rmBook">Verifica disponibilità e prenota →</button>
+        <p class="rm-next" id="rmNext"></p>
         <p class="rm-trust"><b>Piscina inclusa</b> · miglior tariffa garantita · nessuna commissione</p>
       </aside>
     </div>
@@ -1447,6 +1450,8 @@ var IG_POSTS = [];
     nm.textContent=r.nm; meta.textContent=r.meta; price.textContent=r.price; desc.textContent=r.detail;
     amen.innerHTML=r.amen.map(function(a){return '<li>'+a+'</li>';}).join('');
     if(occ) occ.innerHTML='Occupazione: <b>'+occLabel(r.rooms)+'</b>';
+    var nx=document.getElementById('rmNext');
+    if(nx) nx.innerHTML='Prosegui sul sistema di prenotazione ufficiale dell\'hotel, con le tue date gi\u00e0 inserite: seleziona <b>'+r.nm+'</b> per completare.';
     // date di default = quelle della barra principale
     var gi=document.getElementById('in'), go=document.getElementById('out');
     if(rmIn && gi) rmIn.value=gi.value; if(rmOut && go) rmOut.value=go.value;
