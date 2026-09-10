@@ -88,7 +88,9 @@
 
   /* hero */
   .hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:flex-end;margin-top:-92px;padding-top:92px;background:var(--park-deep);overflow:hidden}
-  .hero-media{position:absolute;inset:0;transform:scale(1.05);will-change:transform}
+  .hero-media{position:absolute;inset:0;transform:scale(1.05);will-change:transform;animation:heroDrone 34s ease-in-out infinite alternate}
+  @keyframes heroDrone{from{transform:scale(1.05) translate3d(0,0,0)}to{transform:scale(1.17) translate3d(-1.4%,-1.8%,0)}}
+  @media(prefers-reduced-motion:reduce){.hero-media{animation:none}}
   .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;background:transparent}
   .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity 1.2s ease}
   .hero-img.show{opacity:1}
@@ -686,7 +688,7 @@
       <!-- <source src="assets/hero-drone.webm" type="video/webm"> -->
       <!-- <source src="assets/hero-drone.mp4"  type="video/mp4"> -->
     </video>
-    <img class="hero-img" id="heroImg" src="https://www.villagiustinian.com/images/yootheme/demo/hotel-mirano-frontpage/hotel-mirano-10.jpeg" alt="Park Hotel Villa Giustinian immerso nel parco" onerror="this.style.display='none'">
+    <img class="hero-img" id="heroImg" src="assets/hero-villa.jpg" alt="Park Hotel Villa Giustinian visto dall'alto, immerso nel parco secolare" onerror="this.style.display='none'">
   </div>
   <div class="wrap hero-inner" id="heroInner">
     <span class="eyebrow">Park Hotel · Mirano, Venezia</span>
