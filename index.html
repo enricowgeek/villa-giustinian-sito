@@ -940,7 +940,7 @@ var IG_POSTS = [];
     <a href="#prenota" class="btn js-verifica">Prenota il tuo soggiorno</a>
     <div class="cx">
       <a href="tel:+390415700200">Chiama · +39 041 5700200</a>
-      <a href="https://wa.me/390000000000" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://wa.me/390415700200" target="_blank" rel="noopener">WhatsApp</a>
       <a href="mailto:info@villagiustinian.com">info@villagiustinian.com</a>
     </div>
   </div>
@@ -966,7 +966,7 @@ var IG_POSTS = [];
       <div><div class="name">Villa Giustinian</div><p style="margin-top:14px;max-width:30ch;font-size:.9rem">Park Hotel con piscina a Mirano, nel cuore del Veneto, a 15 minuti da Venezia.</p></div>
       <div><h4>Hotel</h4><ul><li><a href="#camere">Camere</a></li><li><a href="#esperienza">Esperienza</a></li><li><a href="#piscina">Piscina &amp; Parco</a></li><li><a href="#eventi">Eventi</a></li></ul></div>
       <div><h4>Informazioni</h4><ul><li><a href="#mappa">Come raggiungerci</a></li><li><a href="#prenota" class="js-verifica">Prenota diretto</a></li><li><a href="#contatti">Contatti</a></li></ul></div>
-      <div class="foot-contact"><h4>Contatti</h4><p>Via Miranese 85<br>30035 Mirano (VE)</p><p><a href="tel:+390415700200">+39 041 5700200</a></p><p><a href="https://wa.me/390000000000" target="_blank" rel="noopener">WhatsApp</a></p><p><a href="mailto:info@villagiustinian.com">info@villagiustinian.com</a></p></div>
+      <div class="foot-contact"><h4>Contatti</h4><p>Via Miranese 85<br>30035 Mirano (VE)</p><p><a href="tel:+390415700200">+39 041 5700200</a></p><p><a href="https://wa.me/390415700200" target="_blank" rel="noopener">WhatsApp</a></p><p><a href="mailto:info@villagiustinian.com">info@villagiustinian.com</a></p></div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 Park Hotel Villa Giustinian · P.I. 02223240272</span>
@@ -1328,8 +1328,8 @@ var IG_POSTS = [];
   function clearChips(){ cbody.querySelectorAll('.chips').forEach(function(x){x.remove();}); }
   function typing(cb){ var tp=mk('typing','<i></i><i></i><i></i>'); cbody.appendChild(tp); sb(); setTimeout(function(){ tp.remove(); cb(); }, 650+Math.random()*350); }
   function answer(k){ var a=A[k]||A.fallback; typing(function(){ addBot(a.t); addChips(a.c); }); }
-  // WhatsApp · PLACEHOLDER numero: sostituire 390000000000 col numero reale dell'hotel
-  var WA_URL='https://wa.me/390000000000?text=Salve%2C%20vorrei%20informazioni%20su%20Villa%20Giustinian';
+  // WhatsApp · numero reale dell'hotel (verificato sul loro sito: wa.me/+390415700200)
+  var WA_URL='https://wa.me/390415700200?text=Salve%2C%20vorrei%20informazioni%20su%20Villa%20Giustinian';
   function chip(label,k){ clearChips(); addUser(label);
     // apertura SINCRONA (dentro il click) per non far bloccare il popup
     if(k==='WHATSAPP'){ addBot('Ti apro WhatsApp, ti rispondiamo subito 💬'); window.open(WA_URL,'_blank','noopener'); return; }
