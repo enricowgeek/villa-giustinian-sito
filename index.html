@@ -476,10 +476,10 @@
   .rt-go{position:absolute;right:16px;bottom:18px;z-index:2;color:#fff;opacity:0;transform:translateX(-6px);transition:opacity .3s,transform .3s;font-size:1rem}
   .rt:hover .rt-go,.rt:focus-visible .rt-go{opacity:1;transform:none}
   .rt:focus-visible{outline:2px solid var(--brass-lite);outline-offset:3px}
-  .rt.s2{grid-column:span 2}.rt.s3{grid-column:span 3}.rt.s4{grid-column:span 4}
+  .rt.s6{grid-column:span 6}.rt.s2{grid-column:span 2}.rt.s3{grid-column:span 3}.rt.s4{grid-column:span 4}
   @media(max-width:760px){
     .rooms-grid{grid-template-columns:1fr 1fr;gap:8px}
-    .rt.s2,.rt.s3,.rt.s4{grid-column:span 1}
+    .rt.s2,.rt.s3,.rt.s4,.rt.s6{grid-column:span 1}
     .rt:first-child{grid-column:span 2}
     .rt{min-height:180px}
   }
@@ -715,19 +715,18 @@
     <div class="sec-head center reveal">
       <span class="eyebrow center">Le camere</span>
       <h2>Dormi nella dimora</h2>
-      <p class="sec-sub">Sette tipologie affacciate sul parco.<br>Prenotando dal sito ufficiale la piscina è inclusa.</p>
+      <p class="sec-sub">Sei tipologie, tra la Villa e le Barchesse.<br>Prenotando dal sito ufficiale la piscina è inclusa.</p>
     </div>
   </div>
   <!-- CAMERE · mosaico tessere (stile Relais). Click su una tessera apre il dettaglio camera. Foto PLACEHOLDER. -->
   <div class="wrap">
     <div class="rooms-grid stg">
-      <button class="rt s2" data-i="0" aria-label="Doppia Superior — apri il dettaglio"><img loading="lazy" src="https://images.pexels.com/photos/8082220/pexels-photo-8082220.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Doppia Superior" onerror="this.style.display='none'"><span class="rt-nm">Doppia Superior</span><span class="rt-go">→</span></button>
-      <button class="rt s2" data-i="1" aria-label="Suite — apri il dettaglio"><img loading="lazy" src="https://images.pexels.com/photos/34672504/pexels-photo-34672504.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Suite" onerror="this.style.display='none'"><span class="rt-nm">Suite</span><span class="rt-go">→</span></button>
-      <button class="rt s2" data-i="2" aria-label="Family Room — apri il dettaglio"><img loading="lazy" src="https://images.pexels.com/photos/35103156/pexels-photo-35103156.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Family Room" onerror="this.style.display='none'"><span class="rt-nm">Family Room</span><span class="rt-go">→</span></button>
-      <button class="rt s3" data-i="3" aria-label="Doppia Classica — apri il dettaglio"><img loading="lazy" src="https://images.pexels.com/photos/34496715/pexels-photo-34496715.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Doppia Classica" onerror="this.style.display='none'"><span class="rt-nm">Doppia Classica</span><span class="rt-go">→</span></button>
-      <button class="rt s3" data-i="4" aria-label="Doppia Standard — apri il dettaglio"><img loading="lazy" src="https://images.pexels.com/photos/36916378/pexels-photo-36916378.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Doppia Standard" onerror="this.style.display='none'"><span class="rt-nm">Doppia Standard</span><span class="rt-go">→</span></button>
-      <button class="rt s4" data-i="5" aria-label="Doppia Economy — apri il dettaglio"><img loading="lazy" src="https://images.pexels.com/photos/6394607/pexels-photo-6394607.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Doppia Economy" onerror="this.style.display='none'"><span class="rt-nm">Doppia Economy</span><span class="rt-go">→</span></button>
-      <button class="rt s2" data-i="6" aria-label="Camera Singola — apri il dettaglio"><img loading="lazy" src="https://images.pexels.com/photos/14750394/pexels-photo-14750394.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Camera Singola" onerror="this.style.display='none'"><span class="rt-nm">Camera Singola</span><span class="rt-go">→</span></button>
+      <button class="rt s2" data-i="0" aria-label="Matrimoniale Economy — apri il dettaglio"><img loading="lazy" src="assets/camere/matrimoniale-economy-1.jpg" alt="Matrimoniale Economy — Park Hotel Villa Giustinian" onerror="this.style.display='none'"><span class="rt-nm">Matrimoniale Economy</span><span class="rt-go">→</span></button>
+      <button class="rt s2" data-i="1" aria-label="Matrimoniale Standard — apri il dettaglio"><img loading="lazy" src="assets/camere/matrimoniale-standard-1.jpg" alt="Matrimoniale Standard — Park Hotel Villa Giustinian" onerror="this.style.display='none'"><span class="rt-nm">Matrimoniale Standard</span><span class="rt-go">→</span></button>
+      <button class="rt s2" data-i="2" aria-label="Matrimoniale Superior — apri il dettaglio"><img loading="lazy" src="assets/camere/matrimoniale-superior-1.jpg" alt="Matrimoniale Superior — Park Hotel Villa Giustinian" onerror="this.style.display='none'"><span class="rt-nm">Matrimoniale Superior</span><span class="rt-go">→</span></button>
+      <button class="rt s3" data-i="3" aria-label="Tripla — apri il dettaglio"><img loading="lazy" src="assets/camere/tripla-2.jpg" alt="Tripla — Park Hotel Villa Giustinian" onerror="this.style.display='none'"><span class="rt-nm">Tripla</span><span class="rt-go">→</span></button>
+      <button class="rt s3" data-i="4" aria-label="Family Room — apri il dettaglio"><img loading="lazy" src="assets/camere/family-room-2-2-1.jpg" alt="Family Room — Park Hotel Villa Giustinian" onerror="this.style.display='none'"><span class="rt-nm">Family Room</span><span class="rt-go">→</span></button>
+      <button class="rt s6" data-i="5" aria-label="Suite — apri il dettaglio"><img loading="lazy" src="assets/camere/suite-1.jpg" alt="Suite — Park Hotel Villa Giustinian" onerror="this.style.display='none'"><span class="rt-nm">Suite</span><span class="rt-go">→</span></button>
     </div>
   </div>
   <div class="wrap"><div class="sec-cta reveal" style="margin-top:clamp(44px,5vw,60px)"><a href="#prenota" class="btn js-verifica">Prenota il tuo soggiorno</a></div></div>
@@ -984,7 +983,7 @@ var IG_POSTS = [];
     <div class="rm-top">
       <!-- 4 caselle PLACEHOLDER con icona: indicano le 4 foto da scattare per ogni camera -->
       <div class="rm-gallery">
-        <div class="rm-ph rm-ph-main"><svg class="rmi" viewBox="0 0 24 24"><path d="M3 19v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7M3 15h18M3 19v1.5M21 19v1.5M7 10V8.5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1V10"/></svg><span>La camera</span><img loading="lazy" src="https://images.pexels.com/photos/8082220/pexels-photo-8082220.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" alt="Esempio camera" onerror="this.remove()"></div>
+        <div class="rm-ph rm-ph-main"><svg class="rmi" viewBox="0 0 24 24"><path d="M3 19v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7M3 15h18M3 19v1.5M21 19v1.5M7 10V8.5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1V10"/></svg><span>La camera</span><img loading="lazy" src="assets/camere/matrimoniale-superior-1.jpg" alt="Camera Park Hotel Villa Giustinian" onerror="this.remove()"></div>
         <div class="rm-thumbs">
           <div class="rm-ph"><svg class="rmi" viewBox="0 0 24 24"><path d="M4 12h16v2.5a3.5 3.5 0 0 1-3.5 3.5h-9A3.5 3.5 0 0 1 4 14.5V12z"/><path d="M6 12V7a1.8 1.8 0 0 1 3.4-.8"/><path d="M7 18l-1 2.2M18 18l1 2.2"/></svg><span>Il bagno</span></div>
           <div class="rm-ph"><svg class="rmi" viewBox="0 0 24 24"><rect x="4.5" y="3.5" width="15" height="11" rx="1"/><path d="M12 3.5v11M4.5 9h15"/><path d="M3 18.5h18M6 18.5v3M10 18.5v3M14 18.5v3M18 18.5v3"/></svg><span>Il balcone</span></div>
@@ -993,7 +992,7 @@ var IG_POSTS = [];
       </div>
       <aside class="rm-buy">
         <span class="rm-k" id="rmMeta">Vista parco · fino a 2 ospiti</span>
-        <h3 id="rmName">Doppia Superior</h3>
+        <h3 id="rmName">Matrimoniale Superior</h3>
         <div class="rm-priceline"><span class="from">da</span><b id="rmPrice">€119</b><span class="per">/ notte</span></div>
         <div class="rm-dates">
           <label>Arrivo<input type="date" id="rmIn"></label>
@@ -1258,7 +1257,7 @@ var IG_POSTS = [];
   var A={
     piscina:{t:"La nostra piscina è immersa nel parco, con vasche idromassaggio. Aperta dal 1° giugno al 15 settembre, tutti i giorni 9–19 🌞",c:[["È inclusa nel soggiorno?","piscina_inc"],["Vedi le camere","#camere"],["Scegli le date","#prenota"]]},
     piscina_inc:{t:"Sì! La piscina è inclusa per chi prenota dal sito ufficiale — un motivo in più per prenotare diretto ✨",c:[["Prenota ora ↗","BOOK"],["Le camere","camere"]]},
-    camere:{t:"Abbiamo tre tipologie: Doppia Superior con vista parco, Suite con idromassaggio e Family Room fino a 4 persone. Tutte affacciate sul verde.",c:[["Vedi le camere","#camere"],["Soluzioni famiglia","famiglie"],["Scegli le date","#prenota"]]},
+    camere:{t:"Abbiamo sei tipologie: Matrimoniale Economy, Standard e Superior, Tripla, Family Room con terrazza sul parco e Suite. Le Superior e le Suite sono nel corpo storico della Villa.",c:[["Vedi le camere","#camere"],["Soluzioni famiglia","famiglie"],["Scegli le date","#prenota"]]},
     famiglie:{t:"La Family Room è pensata per chi viaggia coi bambini: spazio in più e a due passi dalla piscina 👨‍👩‍👧",c:[["Scegli le date","#prenota"],["La piscina","piscina"]]},
     prezzi:{t:"Prenotando dal sito hai la miglior tariffa garantita: se trovi di meglio altrove, te lo scontiamo del 10%. E nessuna commissione.",c:[["Prenota ora ↗","BOOK"],["La piscina","piscina"]]},
     venezia:{t:"Sei a soli 15 minuti da Venezia: il bus per la città parte ogni 20 minuti dal centro di Mirano 🚌",c:[["Altri collegamenti","trasporti"],["Le camere","camere"]]},
@@ -1412,27 +1411,24 @@ var IG_POSTS = [];
 // ---------- DETTAGLIO CAMERA · pannello modale (4 foto + descrizione + Prenota) ----------
 (function(){
   var ROOMS=[
-    {nm:'Doppia Superior', meta:'Vista parco · fino a 2 ospiti', price:'€119', rooms:'A,A',
-     detail:'La nostra camera più richiesta: ampia e luminosa, affacciata direttamente sul parco secolare. Arredi curati e comfort moderno, per il risveglio più bello prima di una giornata a Venezia.',
-     amen:['Vista parco','Wi-Fi gratuito','Aria condizionata','Bagno privato','TV']},
-    {nm:'Suite', meta:'Salotto · fino a 3 ospiti', price:'€169', rooms:'A,A',
-     detail:'Lo spazio e i dettagli della dimora storica per chi cerca qualcosa in più: ambienti ampi, zona salotto e l’atmosfera autentica della villa.',
-     amen:['Ambiente ampio','Zona salotto','Wi-Fi gratuito','Aria condizionata','Bagno privato']},
-    {nm:'Family Room', meta:'Vicino piscina · fino a 4 ospiti', price:'€189', rooms:'A,A,C,C',
-     detail:'Pensata per chi viaggia con i bambini: spazio in più e posizione comoda, a due passi dalla piscina nel parco.',
-     amen:['Fino a 4 persone','Vicino piscina','Wi-Fi gratuito','Aria condizionata']},
-    {nm:'Doppia Classica', meta:'Stile d’epoca · fino a 2 ospiti', price:'€99', rooms:'A,A',
-     detail:'Il fascino originale della villa nelle sue linee d’epoca: arredi caldi e atmosfera d’altri tempi, con tutti i comfort di oggi.',
-     amen:['Stile d’epoca','Wi-Fi gratuito','Bagno privato']},
-    {nm:'Doppia Standard', meta:'Comfort · fino a 2 ospiti', price:'€89', rooms:'A,A',
-     detail:'Comoda ed essenziale, pensata per un soggiorno sereno tra città d’arte e laguna.',
-     amen:['Comfort','Wi-Fi gratuito','Bagno privato']},
-    {nm:'Doppia Economy', meta:'Essenziale · fino a 2 ospiti', price:'€79', rooms:'A,A',
-     detail:'La soluzione più leggera per scoprire il Veneto, con il verde della villa tutt’intorno.',
-     amen:['Essenziale','Wi-Fi gratuito']},
-    {nm:'Camera Singola', meta:'Per 1 · 1 ospite', price:'€69', rooms:'A',
-     detail:'Raccolta e curata, ideale per chi viaggia da solo o per lavoro.',
-     amen:['Per 1 persona','Wi-Fi gratuito']}
+    {nm:'Matrimoniale Economy', meta:'Nelle Barchesse · fino a 2 ospiti', price:'da €75', rooms:'A,A',
+     detail:'Raccolte ma confortevoli, nelle Barchesse accanto alla villa. Letto alla francese, bagno privato con doccia, arredo in stile country con pavimento in terrazzo veneziano o legno.',
+     amen:['Bagno con doccia','Aria condizionata','Wi-Fi gratuito','TV LCD','Minibar']},
+    {nm:'Matrimoniale Standard', meta:'Nelle Barchesse · fino a 2 ospiti', price:'da €85', rooms:'A,A',
+     detail:'Spaziose e comode, con letto matrimoniale o due letti singoli e bagno privato con doccia o vasca. Pavimenti in terrazzo veneziano o legno, alcune con travi a vista.',
+     amen:['Doccia o vasca','Aria condizionata','Wi-Fi gratuito','TV LCD','Minibar']},
+    {nm:'Matrimoniale Superior', meta:'Nel corpo centrale della Villa · fino a 2 ospiti', price:'da €105', rooms:'A,A',
+     detail:'Nel corpo centrale della Villa, in tipico stile veneziano: ampie, tappezzate in damasco, con lampadari in vetro di Murano e alcuni pezzi originali della famiglia Giustinian.',
+     amen:['Stile veneziano','Vetri di Murano','Aria condizionata','Wi-Fi gratuito','Minibar']},
+    {nm:'Tripla', meta:'Nelle Barchesse · fino a 3 ospiti', price:'da €108', rooms:'A,A,A',
+     detail:'Un letto matrimoniale e un letto singolo, pavimenti in parquet o terrazzo veneziano. La soluzione comoda per tre.',
+     amen:['Fino a 3 ospiti','Aria condizionata','Wi-Fi gratuito','TV LCD']},
+    {nm:'Family Room', meta:'Terrazza sul parco · fino a 5 ospiti', price:'da €151', rooms:'A,A,C,C',
+     detail:'Due camere doppie comunicanti, bagno e terrazza panoramica affacciata sul parco secolare. Pensata per chi viaggia con i bambini.',
+     amen:['Due camere','Terrazza sul parco','Aria condizionata','Wi-Fi gratuito','Frigobar']},
+    {nm:'Suite', meta:'Salone e due bagni · fino a 5 ospiti', price:'da €199', rooms:'A,A',
+     detail:'Nel corpo centrale della Villa: salone, camera matrimoniale e due spaziosi bagni con doccia e vasca. Tappezzerie in damasco, mobili in legno dipinto e vetri di Murano.',
+     amen:['Salone','Due bagni','Stile veneziano','Aria condizionata','Wi-Fi gratuito']}
   ];
   var modal=document.getElementById('roomModal'); if(!modal) return;
   var nm=document.getElementById('rmName'), meta=document.getElementById('rmMeta'),
