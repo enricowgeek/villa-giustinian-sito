@@ -299,6 +299,15 @@
   .typing i{width:7px;height:7px;border-radius:50%;background:var(--brass);animation:blink 1.2s infinite}
   .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
   @keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+  .msg.lead{background:#fff;border:1px solid var(--brass-lite);padding:12px 14px}
+  .msg.lead .lt{font-weight:600;color:var(--park);margin-bottom:4px}
+  .msg.lead .ls{font-size:.78rem;color:var(--soft);margin-bottom:8px}
+  .msg.lead input[type=text]{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:var(--sans);font-size:.86rem;color:var(--ink);background:var(--paper-2);margin-bottom:6px}
+  .msg.lead label{display:flex;gap:7px;align-items:flex-start;font-size:.68rem;color:var(--soft);line-height:1.35;margin:4px 0 8px}
+  .msg.lead label input{margin-top:2px}
+  .msg.lead button{width:100%;background:var(--park);color:var(--paper);border:0;border-radius:8px;padding:9px;font-family:var(--sans);font-weight:600;font-size:.85rem;cursor:pointer}
+  .msg.lead button:disabled{opacity:.6;cursor:default}
+  .msg.lead .skip{display:block;text-align:center;font-size:.72rem;color:var(--soft);margin-top:6px;cursor:pointer;text-decoration:underline}
   .chat-input{display:flex;align-items:center;gap:8px;padding:12px;border-top:1px solid var(--line);background:var(--paper)}
   .chat-input input{flex:1;border:1px solid var(--line);background:var(--paper-2);border-radius:24px;padding:11px 16px;font-family:var(--sans);font-size:.88rem;color:var(--ink);outline:none}
   .chat-input input:focus{border-color:var(--brass)}
@@ -1031,7 +1040,7 @@ var IG_POSTS = [];
       <p>Lasciaci un contatto: ti inviamo il riepilogo con le tue date e il link per prenotare con la piscina inclusa.</p>
       <form name="contatto-villa" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="leadForm">
         <input type="hidden" name="form-name" value="contatto-villa">
-        <input type="hidden" name="arrivo" id="leadIn"><input type="hidden" name="partenza" id="leadOut">
+        <input type="hidden" name="origine" value="sito"><input type="hidden" name="arrivo" id="leadIn"><input type="hidden" name="partenza" id="leadOut">
         <p style="display:none"><label>Non compilare: <input name="bot-field"></label></p>
         <div class="row">
           <input type="email" name="email" placeholder="La tua email" required autocomplete="email">
@@ -1435,14 +1444,45 @@ var IG_POSTS = [];
   function answer(k){ var a=A[k]||A.fallback; typing(function(){ addBot(a.t); addChips(a.c); }); }
   // WhatsApp · numero reale dell'hotel (verificato sul loro sito: wa.me/+390415700200)
   var WA_URL='https://wa.me/390415700200?text=Salve%2C%20vorrei%20informazioni%20su%20Villa%20Giustinian';
-  function chip(label,k){ clearChips(); addUser(label);
+  // ---- richiesta contatto nel chat (una volta per sessione, con consenso) ----
+  var leadAsked=false, interactions=0;
+  try{ leadAsked = sessionStorage.getItem('vg_lead_asked')==='1'; }catch(_){}
+  function askLead(reason){
+    if(leadAsked) return; leadAsked=true;
+    try{ sessionStorage.setItem('vg_lead_asked','1'); }catch(_){}
+    var m=mk('msg bot lead',
+      '<div class="lt">Vuoi che ti scriviamo noi?</div>'+
+      '<div class="ls">Lascia email o cellulare: ti mandiamo il riepilogo con la piscina inclusa e ti aiutiamo a prenotare.</div>'+
+      '<input type="text" placeholder="Email o numero di cellulare" autocomplete="email">'+
+      '<label><input type="checkbox"><span>Acconsento a essere ricontattato dal Park Hotel Villa Giustinian.</span></label>'+
+      '<button type="button">Ricontattatemi</button>'+
+      '<span class="skip">No grazie, continuo così</span>');
+    var inp=m.querySelector('input[type=text]'), chk=m.querySelector('input[type=checkbox]'), btn=m.querySelector('button'), skip=m.querySelector('.skip');
+    btn.addEventListener('click',function(){
+      var v=inp.value.trim(); if(!v){ inp.focus(); return; }
+      if(!chk.checked){ chk.parentNode.style.color='var(--brass)'; return; }
+      var isMail=v.indexOf('@')>0;
+      var i=document.getElementById('in'), o=document.getElementById('out');
+      var body=new URLSearchParams({'form-name':'contatto-villa', email:isMail?v:'', telefono:isMail?'':v,
+        arrivo:(i&&i.value)||'', partenza:(o&&o.value)||'', consenso:'si', origine:'chatbot:'+(reason||'')}).toString();
+      btn.disabled=true; btn.textContent='Invio…';
+      fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body})
+        .then(function(r){ if(!r.ok) throw 0; m.innerHTML='<div class="lt">Perfetto, grazie! 🙌</div><div class="ls">Ti scriviamo a breve con il riepilogo e il link per prenotare con la piscina inclusa.</div>'; if(window.VGtrack) VGtrack('lead_inviato',{origine:'chatbot'}); })
+        .catch(function(){ btn.disabled=false; btn.textContent='Riprova'; });
+    });
+    skip.addEventListener('click',function(){ m.remove(); });
+    cbody.appendChild(m); sb();
+  }
+  function bump(reason){ interactions++; if(interactions>=2) askLead(reason||'interazione'); }
+  function chip(label,k){ clearChips(); addUser(label); bump(k);
+    if(k==='WHATSAPP'||k==='BOOK'||k.indexOf('book:')===0){ setTimeout(function(){ askLead(k==='WHATSAPP'?'whatsapp':'prenota'); }, 900); }
     // apertura SINCRONA (dentro il click) per non far bloccare il popup
     if(k==='WHATSAPP'){ addBot('Ti apro WhatsApp, ti rispondiamo subito 💬'); window.open(WA_URL,'_blank','noopener'); return; }
     if(k==='BOOK'){ addBot('Perfetto, ti porto al calendario ufficiale 👇'); openBooking(document.getElementById('in'),document.getElementById('out'),document.getElementById('g')); return; }
     if(k.indexOf('book:')===0){ var p=k.split(':'); addBot('Perfetto, ti porto al calendario ufficiale 👇'); openBookingDates(p[1],p[2],p[3]||'A,A'); return; }
     if(k.charAt(0)==='#'){ typing(function(){ addBot('Ti porto subito lì 👇'); }); goTo(k); } else { answer(k); }
   }
-  function send(){ var v=textIn.value.trim(); if(!v)return; clearChips(); addUser(v); textIn.value='';
+  function send(){ var v=textIn.value.trim(); if(!v)return; clearChips(); addUser(v); textIn.value=''; bump('messaggio');
     var rng=parseRange(v);
     if(rng){ answerBooking(rng.from,rng.to,roomsFromText(v)); return; }
     answer(matchIntent(v));
