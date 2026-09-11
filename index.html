@@ -299,15 +299,22 @@
   .typing i{width:7px;height:7px;border-radius:50%;background:var(--brass);animation:blink 1.2s infinite}
   .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
   @keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
-  .msg.lead{background:#fff;border:1px solid var(--brass-lite);padding:12px 14px}
-  .msg.lead .lt{font-weight:600;color:var(--park);margin-bottom:4px}
-  .msg.lead .ls{font-size:.78rem;color:var(--soft);margin-bottom:8px}
-  .msg.lead input[type=text]{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:var(--sans);font-size:.86rem;color:var(--ink);background:var(--paper-2);margin-bottom:6px}
-  .msg.lead label{display:flex;gap:7px;align-items:flex-start;font-size:.68rem;color:var(--soft);line-height:1.35;margin:4px 0 8px}
-  .msg.lead label input{margin-top:2px}
-  .msg.lead button{width:100%;background:var(--park);color:var(--paper);border:0;border-radius:8px;padding:9px;font-family:var(--sans);font-weight:600;font-size:.85rem;cursor:pointer}
-  .msg.lead button:disabled{opacity:.6;cursor:default}
-  .msg.lead .skip{display:block;text-align:center;font-size:.72rem;color:var(--soft);margin-top:6px;cursor:pointer;text-decoration:underline}
+  .msg.contact{background:#fff;border:1px solid var(--brass-lite);padding:12px 14px}
+  .msg.contact .lt{font-weight:600;color:var(--park);margin-bottom:4px}
+  .msg.contact .ls{font-size:.78rem;color:var(--soft);margin-bottom:8px}
+  .msg.contact input[type=text],.msg.contact input[type=email],.msg.contact input[type=tel]{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:var(--sans);font-size:.86rem;color:var(--ink);background:var(--paper-2);margin-bottom:6px}
+  .msg.contact input.err{border-color:var(--brass)}
+  .msg.contact .q{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--brass);margin:6px 0 5px}
+  .msg.contact .need{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+  .msg.contact .need span{font-size:.74rem;padding:5px 9px;border:1px solid var(--line);border-radius:999px;color:var(--park);background:#fff;cursor:pointer;user-select:none}
+  .msg.contact .need span.on{background:var(--park);border-color:var(--park);color:var(--paper)}
+  .msg.contact .or{display:flex;align-items:center;gap:8px;font-size:.66rem;color:var(--soft);text-transform:uppercase;letter-spacing:.08em;margin:2px 0 6px}
+  .msg.contact .or::before,.msg.contact .or::after{content:"";flex:1;height:1px;background:var(--line)}
+  .msg.contact label{display:flex;gap:7px;align-items:flex-start;font-size:.68rem;color:var(--soft);line-height:1.35;margin:4px 0 8px}
+  .msg.contact label input{margin-top:2px}
+  .msg.contact button{width:100%;background:var(--park);color:var(--paper);border:0;border-radius:8px;padding:9px;font-family:var(--sans);font-weight:600;font-size:.85rem;cursor:pointer}
+  .msg.contact button:disabled{opacity:.6;cursor:default}
+  .msg.contact .skip{display:block;text-align:center;font-size:.72rem;color:var(--soft);margin-top:6px;cursor:pointer;text-decoration:underline}
   .chat-input{display:flex;align-items:center;gap:8px;padding:12px;border-top:1px solid var(--line);background:var(--paper)}
   .chat-input input{flex:1;border:1px solid var(--line);background:var(--paper-2);border-radius:24px;padding:11px 16px;font-family:var(--sans);font-size:.88rem;color:var(--ink);outline:none}
   .chat-input input:focus{border-color:var(--brass)}
@@ -1036,20 +1043,21 @@ var IG_POSTS = [];
     <a href="#prenota" class="btn js-verifica">Prenota il tuo soggiorno</a>
 
     <div class="lead" id="lead">
-      <h3>Non prenoti adesso?</h3>
-      <p>Lasciaci un contatto: ti inviamo il riepilogo con le tue date e il link per prenotare con la piscina inclusa.</p>
+      <h3>Offerte e novità dalla villa</h3>
+      <p>Lascia la tua email: ti scriviamo quando apre la piscina, per le offerte riservate a chi prenota dal sito e, se hai scelto le date, con il link per prenotare con la piscina inclusa.</p>
       <form name="contatto-villa" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="leadForm">
         <input type="hidden" name="form-name" value="contatto-villa">
-        <input type="hidden" name="origine" value="sito"><input type="hidden" name="arrivo" id="leadIn"><input type="hidden" name="partenza" id="leadOut">
+        <input type="hidden" name="origine" value="newsletter"><input type="hidden" name="arrivo" id="leadIn"><input type="hidden" name="partenza" id="leadOut">
+        <input type="hidden" name="esigenza"><input type="hidden" name="canale">
         <p style="display:none"><label>Non compilare: <input name="bot-field"></label></p>
         <div class="row">
           <input type="email" name="email" placeholder="La tua email" required autocomplete="email">
           <input type="tel" name="telefono" placeholder="Telefono (facoltativo)" autocomplete="tel">
         </div>
-        <label class="consent"><input type="checkbox" name="consenso" value="si" required><span>Acconsento a essere ricontattato dal Park Hotel Villa Giustinian per questa richiesta e a ricevere comunicazioni sulle offerte. Informativa privacy.</span></label>
-        <button class="btn" type="submit">Inviami il riepilogo</button>
+        <label class="consent"><input type="checkbox" name="consenso" value="si" required><span>Acconsento a ricevere le comunicazioni del Park Hotel Villa Giustinian (offerte, novità, riepilogo del soggiorno) e a essere ricontattato per questa richiesta. Informativa privacy.</span></label>
+        <button class="btn" type="submit">Iscrivimi</button>
       </form>
-      <p class="done">Grazie! Ti scriviamo a breve con il riepilogo e il link per prenotare.</p>
+      <p class="done">Grazie! Sei nella lista: ti scriviamo per le offerte e, se hai scelto le date, con il link per prenotare.</p>
     </div>
     <div class="cx">
       <a href="tel:+390415700200">Chiama · +39 041 5700200</a>
@@ -1445,36 +1453,50 @@ var IG_POSTS = [];
   // WhatsApp · numero reale dell'hotel (verificato sul loro sito: wa.me/+390415700200)
   var WA_URL='https://wa.me/390415700200?text=Salve%2C%20vorrei%20informazioni%20su%20Villa%20Giustinian';
   // ---- richiesta contatto nel chat (una volta per sessione, con consenso) ----
-  var leadAsked=false, interactions=0;
-  try{ leadAsked = sessionStorage.getItem('vg_lead_asked')==='1'; }catch(_){}
+  // Card "vuoi che ti contattiamo noi?": compare all'apertura della chat; se l'utente la salta,
+  // viene riproposta UNA sola volta quando clicca Prenota/WhatsApp. Sparisce per sempre dopo l'invio.
+  var leadDone=false, leadShown=0, leadCard=null;
+  try{ leadDone = sessionStorage.getItem('vg_lead_done')==='1'; }catch(_){}
+  var NEEDS=[['Disponibilità e prezzi','disponibilita'],['Piscina e servizi','piscina'],['Soggiorno in famiglia','famiglia'],['Evento o matrimonio','evento'],['Altro','altro']];
   function askLead(reason){
-    if(leadAsked) return; leadAsked=true;
-    try{ sessionStorage.setItem('vg_lead_asked','1'); }catch(_){}
-    var m=mk('msg bot lead',
-      '<div class="lt">Vuoi che ti scriviamo noi?</div>'+
-      '<div class="ls">Lascia email o cellulare: ti mandiamo il riepilogo con la piscina inclusa e ti aiutiamo a prenotare.</div>'+
-      '<input type="text" placeholder="Email o numero di cellulare" autocomplete="email">'+
-      '<label><input type="checkbox"><span>Acconsento a essere ricontattato dal Park Hotel Villa Giustinian.</span></label>'+
-      '<button type="button">Ricontattatemi</button>'+
-      '<span class="skip">No grazie, continuo così</span>');
-    var inp=m.querySelector('input[type=text]'), chk=m.querySelector('input[type=checkbox]'), btn=m.querySelector('button'), skip=m.querySelector('.skip');
+    if(leadDone || leadShown>=2 || leadCard) return; leadShown++;
+    var m=mk('msg bot contact',
+      '<div class="lt">Vuoi che ti contattiamo noi?</div>'+
+      '<div class="ls">Dicci di cosa hai bisogno e lascia <b>email o cellulare</b>: ti rispondiamo noi, sul canale che preferisci.</div>'+
+      '<div class="q">Di cosa hai bisogno?</div><div class="need"></div>'+
+      '<div class="q">Come ti contattiamo?</div>'+
+      '<input type="email" placeholder="La tua email" autocomplete="email" inputmode="email">'+
+      '<div class="or">oppure</div>'+
+      '<input type="tel" placeholder="Il tuo cellulare" autocomplete="tel" inputmode="tel">'+
+      '<label><input type="checkbox"><span>Acconsento a essere ricontattato dal Park Hotel Villa Giustinian e a ricevere le sue comunicazioni.</span></label>'+
+      '<button type="button">Contattatemi</button>'+
+      '<span class="skip">No grazie, continuo in chat</span>');
+    var needW=m.querySelector('.need'), need='';
+    NEEDS.forEach(function(n){ var s=document.createElement('span'); s.textContent=n[0]; s.addEventListener('click',function(){ needW.querySelectorAll('span').forEach(function(x){x.classList.remove('on');}); s.classList.add('on'); need=n[1]; }); needW.appendChild(s); });
+    var em=m.querySelector('input[type=email]'), tel=m.querySelector('input[type=tel]'), chk=m.querySelector('input[type=checkbox]'), btn=m.querySelector('button'), skip=m.querySelector('.skip');
     btn.addEventListener('click',function(){
-      var v=inp.value.trim(); if(!v){ inp.focus(); return; }
+      var e=em.value.trim(), t=tel.value.trim();
+      var okMail=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e), okTel=/^\+?[\d\s().-]{7,}$/.test(t);
+      em.classList.toggle('err', !!e && !okMail); tel.classList.toggle('err', !!t && !okTel);
+      if(!okMail && !okTel){ (e?em:(t?tel:em)).focus(); return; }
       if(!chk.checked){ chk.parentNode.style.color='var(--brass)'; return; }
-      var isMail=v.indexOf('@')>0;
+      var canale = okTel && okMail ? 'email+telefono' : (okTel ? 'telefono' : 'email');
       var i=document.getElementById('in'), o=document.getElementById('out');
-      var body=new URLSearchParams({'form-name':'contatto-villa', email:isMail?v:'', telefono:isMail?'':v,
+      var body=new URLSearchParams({'form-name':'contatto-villa', email:okMail?e:'', telefono:okTel?t:'', esigenza:need||'non indicata', canale:canale,
         arrivo:(i&&i.value)||'', partenza:(o&&o.value)||'', consenso:'si', origine:'chatbot:'+(reason||'')}).toString();
       btn.disabled=true; btn.textContent='Invio…';
       fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body})
-        .then(function(r){ if(!r.ok) throw 0; m.innerHTML='<div class="lt">Perfetto, grazie! 🙌</div><div class="ls">Ti scriviamo a breve con il riepilogo e il link per prenotare con la piscina inclusa.</div>'; if(window.VGtrack) VGtrack('lead_inviato',{origine:'chatbot'}); })
+        .then(function(r){ if(!r.ok) throw 0;
+          leadDone=true; leadCard=null; try{ sessionStorage.setItem('vg_lead_done','1'); }catch(_){}
+          var how = okTel && okMail ? 'via email o al numero che ci hai lasciato' : (okTel ? 'al numero che ci hai lasciato, su WhatsApp o con una chiamata' : 'via email');
+          m.innerHTML='<div class="lt">Perfetto, grazie! 🙌</div><div class="ls">Ti ricontattiamo a breve '+how+'. Prenotando dal sito la piscina è inclusa e hai la miglior tariffa garantita.</div>';
+          if(window.VGtrack) VGtrack('lead_inviato',{origine:'chatbot',canale:canale,esigenza:need||''}); })
         .catch(function(){ btn.disabled=false; btn.textContent='Riprova'; });
     });
-    skip.addEventListener('click',function(){ m.remove(); });
-    cbody.appendChild(m); sb();
+    skip.addEventListener('click',function(){ m.remove(); leadCard=null; });
+    leadCard=m; cbody.appendChild(m); sb();
   }
-  function bump(reason){ interactions++; if(interactions>=2) askLead(reason||'interazione'); }
-  function chip(label,k){ clearChips(); addUser(label); bump(k);
+  function chip(label,k){ clearChips(); addUser(label);
     if(k==='WHATSAPP'||k==='BOOK'||k.indexOf('book:')===0){ setTimeout(function(){ askLead(k==='WHATSAPP'?'whatsapp':'prenota'); }, 900); }
     // apertura SINCRONA (dentro il click) per non far bloccare il popup
     if(k==='WHATSAPP'){ addBot('Ti apro WhatsApp, ti rispondiamo subito 💬'); window.open(WA_URL,'_blank','noopener'); return; }
@@ -1482,7 +1504,7 @@ var IG_POSTS = [];
     if(k.indexOf('book:')===0){ var p=k.split(':'); addBot('Perfetto, ti porto al calendario ufficiale 👇'); openBookingDates(p[1],p[2],p[3]||'A,A'); return; }
     if(k.charAt(0)==='#'){ typing(function(){ addBot('Ti porto subito lì 👇'); }); goTo(k); } else { answer(k); }
   }
-  function send(){ var v=textIn.value.trim(); if(!v)return; clearChips(); addUser(v); textIn.value=''; bump('messaggio');
+  function send(){ var v=textIn.value.trim(); if(!v)return; clearChips(); addUser(v); textIn.value='';
     var rng=parseRange(v);
     if(rng){ answerBooking(rng.from,rng.to,roomsFromText(v)); return; }
     answer(matchIntent(v));
@@ -1490,7 +1512,9 @@ var IG_POSTS = [];
   sendBtn.addEventListener('click',send);
   textIn.addEventListener('keydown',function(e){ if(e.key==='Enter') send(); });
   function openChat(){ panel.classList.add('open'); panel.setAttribute('aria-hidden','false'); document.body.classList.add('chat-open'); teaser.classList.remove('show'); var bg=fab.querySelector('.badge'); if(bg)bg.style.display='none';
-    if(!opened){ opened=true; setTimeout(function(){ addBot("Ciao! Sono l'assistente di Villa Giustinian 🌿 Posso darti una mano con piscina, camere, prenotazioni e dintorni. Cosa ti serve?"); addChips([["La piscina","piscina"],["Le camere","camere"],["Disponibilità & prezzi","prenota"],["Quanto dista Venezia?","venezia"],["Scrivi su WhatsApp 💬","WHATSAPP"]]); },260); } }
+    if(!opened){ opened=true; setTimeout(function(){ addBot("Ciao! Sono l'assistente di Villa Giustinian 🌿 Posso darti una mano con piscina, camere, prenotazioni e dintorni. Cosa ti serve?"); addChips([["La piscina","piscina"],["Le camere","camere"],["Disponibilità & prezzi","prenota"],["Quanto dista Venezia?","venezia"],["Scrivi su WhatsApp 💬","WHATSAPP"]]);
+      // richiesta contatto subito all'apertura (email o cellulare + esigenza)
+      setTimeout(function(){ askLead('apertura'); },1400); },260); } }
   function closeChat(){ panel.classList.remove('open'); panel.setAttribute('aria-hidden','true'); document.body.classList.remove('chat-open'); }
   fab.addEventListener('click',function(){ panel.classList.contains('open')?closeChat():openChat(); });
   xBtn.addEventListener('click',closeChat);
